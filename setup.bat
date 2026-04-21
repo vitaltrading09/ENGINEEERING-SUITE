@@ -6,6 +6,9 @@
 ::  the app. After setup, use  run.bat  to start the app in future sessions.
 :: ============================================================================
 
+:: Always run from the folder this .bat file lives in (fixes System32 issue)
+cd /d "%~dp0"
+
 echo.
 echo  =========================================================
 echo   Engineering Calculator Suite — Setup
