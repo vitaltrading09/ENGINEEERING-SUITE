@@ -15,3 +15,6 @@ ezdxf>=1.0.0
 
 # Datasheet Library
 requests>=2.28.0
+
+# Engineering Guides (Markdown rendering)
+markdown>=3.5.0
