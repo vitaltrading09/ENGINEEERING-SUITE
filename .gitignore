@@ -1,0 +1,53 @@
+# ── Claude Code local settings ────────────────────────────────────────────────
+.claude/
+
+# ── Python cache ──────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# ── Virtual environments ───────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Distribution / packaging ───────────────────────────────────────────────────
+build/
+dist/
+*.egg-info/
+*.egg
+
+# ── IDE / editor files ─────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ── OS junk ───────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── App user data (created at runtime, never committed) ───────────────────────
+# Saved screen-report sessions
+*.srp.json
+
+# User-created templates (stored in home dir, but just in case)
+*.screen_templates.json
+
+# Captured screenshots (user content, can be large)
+# Uncomment the next line if you do NOT want to commit any PNG files:
+# *.png
+
+# ── Sensitive / local config ──────────────────────────────────────────────────
+.env
+*.cfg
+local_settings.py
+
+# ── Pytest / coverage ─────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
