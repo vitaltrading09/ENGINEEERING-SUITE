@@ -1,234 +1,503 @@
-# Transformer Testing — South African Standards
+# Transformer Testing Procedures
 
-This guide covers routine, acceptance, and diagnostic testing of distribution and power transformers in South Africa. It aligns with **SANS 780:2014** (distribution transformers), **SANS 60076** (IEC 60076 adopted by SABS), **NRS 097-2** (Eskom Network & Customer specifications), and **SANS 10142-1** where applicable to LV wiring associated with transformers.
-
-> **Important:** Always cross-reference your specific client's specification. Eskom, City Power, and municipal utilities may impose additional requirements beyond SANS minimums via their own Network Standards (NRS series).
+These procedures cover routine, acceptance and repair testing of distribution and power transformers
+in accordance with **SANS 780**, **SANS 60076 (IEC 60076)** and **Transformco Work Procedures (WP 19 – WP 52)**.
+All tests must be witnessed and signed off by an approved Tester. Results are recorded on the
+Transformer Test Certificate and Oil Test Certificate issued with every completed unit.
 
 ---
 
-## 1. Safety Prerequisites — Non-Negotiable
+## 1. Routine Test Schedule
 
-Before any test equipment is connected, the following steps are **mandatory** under South African OHS Act (Act 85 of 1993) and SANS 10142-1:
+The tests required depend on the stage of manufacture or repair.
+
+![WP 19 — Master Test Schedule](images/preview/20260420_123730.jpg)
+
+### a) Tests at Receiving of Transformer (Repair)
+
+| Test | Work Procedure |
+|---|---|
+| Insulation Resistance (Megger) | WP 31 |
+| Ratio Test | WP 32 |
+| Positive Sequence Impedance | WP 33 |
+| Vector Group Test | WP 34 |
+
+### b) Tests on New Windings & Core (Pre-Test)
+
+| Test | Work Procedure |
+|---|---|
+| Insulation Resistance (Megger) | WP 31 |
+| Ratio Test | WP 32 |
+| Positive Sequence Impedance | WP 33 |
+| Vector Group Test | WP 34 |
+
+### c) Final Tests on Completed Transformer
+
+| Test | Work Procedure |
+|---|---|
+| Insulation Resistance (Megger) | WP 31 |
+| Ratio Test | WP 32 |
+| Winding Resistance | WP 35 |
+| Positive Sequence Impedance | WP 33 |
+| Vector Group Test | WP 34 |
+| Induced Over Voltage Withstand | WP 36 |
+| Separate Source Voltage Withstand | WP 37 |
+| Load & No Load Loss | WP 38 |
+| Heat Run *(New Transformers Only — if required by Customer)* | WP 67 |
+
+> Any failure or irregular test result must be reported immediately to the Designer, Internal Sales Manager, or Winding Foreman.
+
+---
+
+## 2. Mini Sub-Station Test Schedule (WP 24)
+
+![WP 24 — Mini Sub-Station, Switchgear & LV Panel Test Procedure](images/preview/20260420_124054.jpg)
+
+The Switchgear Supplier provides a MV Switchgear Test Certificate for each unit supplied.
+MV Switchgear Test Certificates are kept by the Quality Representative or Technical Director for record.
+The Tester will conduct an Insulation Resistance Test on the MV Switchgear between each Phase and Earth,
+and between Phases on the Low Voltage Panel to ensure no breakdown of insulation is evident.
+
+### a) Pre-Tests on Transformer Windings & Core
+
+| Test | Work Procedure |
+|---|---|
+| Insulation Resistance (Megger) | WP 31 |
+| Turns Ratio Test | WP 32 |
+| Winding Resistance Test | WP 35 |
+| Vector Group Test | WP 34 |
+
+### b) Final Tests on Completed Transformer
+
+| Test | Work Procedure |
+|---|---|
+| Insulation Resistance | WP 31 |
+| Ratio Test | WP 32 |
+| Winding Resistance | WP 35 |
+| Positive Sequence Impedance | WP 33 |
+| Vector Group Test | WP 34 |
+| Induced Over Voltage | WP 36 |
+| Separate Source Voltage Withstand | WP 37 |
+| Load & No-Load Loss Test | WP 38 |
+
+---
+
+## 3. Safety Prerequisites — Non-Negotiable
+
+Before any test equipment is connected:
 
 - **De-energize & Isolate:** Disconnect all HV and LV sources. Confirm isolation with an approved voltage detector.
+- **Earth All Windings:** Apply earthing clamps to HV terminals, LV terminals and the tank before touching any component. Discharge any residual charge — large transformers hold significant capacitive energy.
+- **Discharge Residual Charge:** Before measuring IR, earth the components under test for a few seconds to ensure any residual electrical charge is completely discharged. A residual charge will give incorrect IR readings.
 - **Lock Out / Tag Out (LOTO):** Apply padlocks and danger tags per your site LOTO procedure. Retain the key.
-- **Earth all Windings:** Apply earthing clamps to HV and LV terminals, and to the tank. Discharge stored energy.
-- **Discharge Capacitance:** Large transformers hold capacitive charge — wait the prescribed discharge time (typically 5 minutes per 10 kV of winding voltage class) after isolation before touching terminals.
-- **PPE:** Rubber insulating gloves (class rated for the voltage), arc flash face shield, and flame-resistant clothing are required for all LV and MV work.
+- **PPE:** Rubber insulating gloves (rated for the voltage class), arc flash face shield, and flame-resistant clothing required for all HV and LV work.
+- **Open Circuit Hazard:** An open circuit during Winding Resistance testing is extremely dangerous — it can cause Flash-Over in the Transformer, damage instruments and harm the Tester.
 - **Gas Check (Oil Transformers):** Check for combustible gas accumulation before opening inspection covers on oil-filled units.
 
 ---
 
-## 2. Insulation Resistance (IR) Test
-**Status: MANDATORY (Routine) — SANS 780:2014 / NRS 097-2**
+## 4. WP 31 — Insulation Resistance (Megger) Test
+
+![WP 31 — Insulation Resistance (Megger) Test Procedure](images/preview/20260420_123705.jpg)
 
 ### Purpose
-IR testing detects moisture ingress, surface contamination, and thermal aging of the winding insulation before a catastrophic failure occurs. A high-voltage DC source (Megger / insulation tester) measures the leakage current through the dielectric to calculate resistance in MΩ or GΩ.
-
-### Recommended Test Voltages (DC)
-
-| Winding Voltage Class | Recommended Megger Voltage |
-| :--- | :--- |
-| LV Side (415 V / 1 kV class) | 500 V or 1 000 V DC |
-| HV Side (up to 11 kV) | 2 500 V DC |
-| HV Side (11 kV – 33 kV) | 5 000 V DC |
-| HV Side (above 33 kV) | 10 000 V DC |
-
-### Minimum Acceptance Criteria (at 20°C)
-
-| Voltage Class | Oil-Filled (Min MΩ) | Dry-Type (Min MΩ) |
-| :--- | :--- | :--- |
-| Up to 600 V (incl. 415 V) | 100 MΩ | 500 MΩ |
-| 600 V – 5 kV (incl. 1.2 kV) | 1 000 MΩ | 5 000 MΩ |
-| 5 kV – 15 kV (incl. 11 kV) | 5 000 MΩ | 25 000 MΩ |
-| 15 kV – 69 kV (incl. 22 kV, 33 kV) | 10 000 MΩ | 50 000 MΩ |
-
-> **NRS 097-2 Note:** Eskom requires a minimum IR of 1 000 MΩ for distribution transformers at 11 kV on the HV side. Values below 100 MΩ on any winding are considered a failure requiring investigation.
-
-### Temperature Correction
-IR readings are halved for every 10°C increase. Normalise all readings to **20°C** to compare against baseline or Factory Acceptance Test (FAT) data.
-
-`IR_20°C = IR_Measured × Correction Factor`
-
-| Temp (°C) | 0°C | 10°C | 20°C | 30°C | 40°C | 50°C |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Factor** | 0.25 | 0.50 | 1.00 | 1.98 | 3.95 | 7.85 |
+Measures leakage current through the insulation system to detect moisture ingress, surface contamination,
+or thermal aging before a failure occurs. Uses a high-voltage DC Insulation Resistance Tester (Megger)
+capable of testing up to 10 kV DC.
 
 ### Test Configurations
-All three configurations below must be measured:
+The following combinations are tested between Earth and individual components:
 
-1. **HV to (LV + Tank/Earth):** Megger on HV terminals; short and earth the LV terminals and tank.
-2. **LV to (HV + Tank/Earth):** Megger on LV terminals; short and earth the HV terminals and tank.
-3. **(HV + LV) to Tank/Earth:** Both windings connected to Megger; tank earthed. Tests inter-winding and core insulation together.
+- Primary (HV) Coils and Earth
+- Secondary (LV) Coils and Earth
+- Primary (HV) Coils and Secondary (LV) Coils
+- Core Clamps and Earth
+- Core to Core Clamps
+- Secondary LV Connections
 
----
+### Megger Voltage Settings
 
-## 3. Polarization Index (PI)
-**Status: MANDATORY (Routine) — IEEE 43 / SANS 60076**
+| Transformer Rated Voltage | Megger Voltage Setting |
+|---|---|
+| ≤ 1 000 V | 2.5 kV |
+| 1 000 V | 2.5 kV |
+| 3 300 V | 5 kV |
+| 6 600 V | 10 kV |
+| 11 000 V | 10 kV |
+| 22 000 V | 2.5 kV |
+| 33 000 V | 2.5 kV |
 
-The PI is derived from the IR test and provides information about the moisture content and condition of the insulation.
+### Minimum Acceptable IR Values
 
-`PI = IR (10-minute reading) ÷ IR (1-minute reading)`
-
-| PI Value | Insulation Condition |
-| :--- | :--- |
-| < 1.0 | **Dangerous** — Moisture or breakdown suspected |
-| 1.0 – 1.5 | **Poor** — Investigate before energising |
-| 1.5 – 2.0 | **Questionable** — Monitor closely |
-| 2.0 – 4.0 | **Good** |
-| > 4.0 | **Excellent** |
-
-> A PI below 1.5 on a transformer that was previously in service should trigger a Dissolved Gas Analysis (DGA) before re-energisation.
-
----
-
-## 4. Transformer Turns Ratio (TTR) Test
-**Status: MANDATORY (Routine) — SANS 780:2014 / IEC 60076-1**
-
-### Purpose
-Validates that the actual turns ratio matches the nameplate, confirms tap changer operation, and verifies correct phase configuration on all taps.
-
-### Procedure
-1. Apply the TTR test set to HV and LV terminal pairs (A-a, B-b, C-c for 3-phase).
-2. Test on **all tap positions** if an OLTC or DETC is fitted.
-3. Record ratio and phase displacement for each tap.
-
-### Acceptance Criteria (SANS 780:2014 / IEC 60076-1)
-- Ratio must be within **±0.5%** of the theoretical nameplate ratio on all taps.
-- Phase displacement (vector group) must match nameplate (e.g., Dyn11).
-
-> **Common SA Vector Groups:** Dyn11 (most distribution transformers), YNyn0, Yzn11. Confirm with nameplate — incorrect vector group assumption is a frequent commissioning error.
-
----
-
-## 5. Winding Resistance Test
-**Status: MANDATORY (Routine) — SANS 780:2014 / IEC 60076-1**
-
-### Purpose
-Measures the DC resistance of copper or aluminium windings to identify loose connections, broken strands, poor solder joints, or tap changer contact problems.
+| Component | Minimum IR |
+|---|---|
+| New LV Coil to Earth | 500 MΩ |
+| New HV Coil to Earth | 500 MΩ |
+| Between new LV and HV Coils | 500 MΩ |
+| Overhauled LV Coils | 500 MΩ |
+| Overhauled HV Coils | 500 MΩ |
+| Between LV & HV Overhauled Coils | 500 MΩ |
+| Between Core and Core Clamps | 400 MΩ |
 
 ### Procedure
-- Inject a continuous DC test current (1 A to 10 A).
-- Wait for the inductive core to saturate — the reading must be **stable** before recording (this can take several minutes on large transformers).
-- Use a **4-wire (Kelvin) connection** to eliminate test lead resistance.
-- Measure all three phases on both HV and LV sides.
-- Test on all tap positions if OLTC/DETC fitted.
+1. Ensure all windings are earthed and residual charge is discharged before connecting the Megger.
+2. Apply test voltage for no more than **60 seconds** per measurement.
+3. Measure the Temperature of the Winding and record on the Transformer Test Report.
+4. Test Earth connection integrity when testing HV and LV Coils to ensure a proper Earth Connection.
+5. Record all results on the Transformer Test Report.
 
-### Temperature Correction
-All readings must be corrected to **75°C** (or the factory reference temperature) using:
+### Failure Interpretation
 
-`R_ref = R_measured × (T_ref + 235) / (T_measured + 235)`   *(for copper)*
-`R_ref = R_measured × (T_ref + 225) / (T_measured + 225)`   *(for aluminium)*
+| IR Reading | Interpretation |
+|---|---|
+| 0 MΩ (Zero) | Complete breakdown or short to earth exists |
+| < 100 MΩ | Insulation is wet, or leakage/breakdown to earth is present |
+| < Minimum specified | Investigate before energising |
+
+> **Wet Coils / Core:** If the Core or Coils are wet, place in the Baking Oven at **100°C** for 12 to 18 hours, or until the IR fully complies with specified requirements. Re-test and record results after drying.
+
+---
+
+## 5. WP 32 — Turns Ratio Test
+
+![WP 32 — Transformer Ratio Test Procedure](images/preview/20260420_123707.jpg)
+
+### Purpose
+Validates that the actual turns ratio matches the nameplate, confirms tap changer operation on all taps,
+and verifies the Vector Group of the Winding.
+
+### Procedure
+1. Connect the Ratiometer in the Test Bay to the **H1, H2 and H3 leads** of the Primary (HV) Windings.
+2. The **H0 lead** connection is only applicable when a Neutral is on the Primary Winding.
+3. Connect **X1, X2 and X3 leads** to the Secondary Windings, and **X0** to the Neutral Bar of the Secondary Coils.
+4. Enter the Tap readings on the Ratiometer and press **"START"**.
+5. Switch ON the Ratiometer and press "START".
+6. Record readings from the Ratiometer on the Transformer Test Report.
+7. Once completed, compare Ratio Test results with the calculated results from the Designer and Winding Specification.
+8. When the Transformer has more than one tapping, measure the Voltage Ratio relative to each tapping.
+9. The Vector Group of the Winding will be confirmed by the Ratiometer.
+10. Record Ratio Test results on the Transformer Test Certificate.
+11. When required, a copy of the Ratiometer Results will be printed.
 
 ### Acceptance Criteria
-- Deviation between any two identical phases: **≤ 1.0%** (SANS 780), **≤ 2.0%** (IEC 60076).
-- All readings must match FAT data within **±2%** when temperature-corrected.
+- A difference of **≤ 0.5%** between the Measured value and the Calculated value is acceptable.
+- The Vector Group of the Winding must match the Design Vector Diagram.
 
 ---
 
-## 6. Short Circuit Impedance & Load Loss Test
-**Status: MANDATORY (Type Test / FAT) — IEC 60076-1**
+## 6. WP 33 — Positive Sequence Impedance Test (Copper Loss)
 
-Verifies the transformer's short-circuit impedance (Vk%) which is critical for fault level calculations and protection coordination (see Short Circuit Current calculator in this suite).
+![WP 33 — Positive Sequence Impedance Test Procedure](images/preview/20260420_123709.jpg)
+
+### Purpose
+Measures the Short Circuit Impedance (Vk%) and Load Loss (Copper Loss) of the Transformer.
+The load-loss is made up of I²R losses in the winding plus all stray losses due to eddy currents and
+leakage flux between windings when the Transformer is on full working load.
+
+### Procedure
+1. Connect Test cable leads to the **Primary (HV) side** of the Transformer.
+2. Short the **Secondary (LV) side** connections (excluding Neutral) with drilled copper bars, cables or flexible links.
+   - The cross-section of the short-circuit link must be able to carry the current; contacts must be tight and secured.
+3. Switch Test Bench **"ON"** and select the circuit for the 3 Phase Variac and Transformer.
+4. Calculate Full Load Current on the Primary (HV) side and Secondary (LV) side.
+5. Determine the Test Voltages required (refer to table below).
+6. Monitor voltage and current on the **HV (Primary) side** of the Transformer and record Volts and Amps.
+7. Switch **"OFF"** supply to Transformer.
+8. Use Variac to increase current up to Full Load Current.
+9. Record the Voltage and Watt readings of the Transformer on the Power Analyser.
+10. Record the Current readings on the LV (Secondary) short-circuit side of the Transformer.
+11. Calculate the Impedance using the formulae below.
+12. Record results on the Transformer Test Report.
+
+### Test Voltages
+
+| Transformer Rated Voltage | Test Voltage |
+|---|---|
+| 1 000 V | 50 V |
+| 3 000 V | 150 V |
+| 6 000 V | 280 V |
+| 11 000 V | 400 V |
+| 22 000 V | 800 V |
+
+### Impedance Calculation
+
+**3-Phase:**
+```
+Z (%) = (VP × kV² × √3) / (IP × VA × 100)
+```
+
+**1-Phase:**
+```
+Z (%) = (VP × kV²) / (IP × VA × 100)
+```
+
+Where:
+- `VP` = Primary Test Voltage in kV
+- `IP` = Primary Test Current
+- `kV` = No Load Voltage in kV
+
+### Acceptance Criteria (SANS 780)
+
+| Rated Power P (kVA) | Impedance Range (%) |
+|---|---|
+| P < 200 | 3.0 – 4.5 |
+| 200 < P < 500 | 4.0 – 5.0 |
+| 500 < P < 1 250 | 4.5 – 5.5 |
+| 1 250 < P < 3 150 | 5.0 – 6.5 |
+
+> The Load Loss at rated Current must be corrected to a reference Temperature of **75°C**.
+
+---
+
+## 7. WP 34 — Vector Group Test
+
+![WP 34 — Vector Group Test Procedure](images/preview/20260420_123711.jpg)
+
+### Purpose
+The Vector Group Detection Test is done simultaneously with the Turns Ratio Test to determine whether
+the transformer's measured results match the Design Vector Diagram.
+
+### Procedure
+1. Short circuit the **"A" phase** on the Secondary (HV) side with the **"a" phase** on the Primary (LV) side
+   by turning the Selector Switch.
+2. Connect the Connection leads from the Test Panel on the **Primary (HV) side** of the Transformer to be tested.
+3. Connect the leads from the Multimeter to **S1 and S2 Connectors** on the Test Panel — this provides a Voltage
+   Output of **400 volts**.
+4. Take Voltage readings as required from the Multimeter and record.
+5. Measure the Voltages between Secondary and Primary Terminals of the Transformer:
+   - A and b
+   - B and b
+   - C and b
+   - B and c
+   - C and b
+6. Use the readings obtained to draw up the Vector Diagram.
+7. Compare the drawn-up Vector Diagram with the Design Vector Diagram.
+8. Once completed with the Vector Group Test, switch off the supply and remove the Multimeter.
+9. Always adhere to all Safety standards and requirements when working with Live equipment.
+
+---
+
+## 8. WP 35 — Winding Resistance Test
+
+![WP 35 — Transformer Resistance Test Procedure](images/preview/20260420_123714.jpg)
+
+### Purpose
+Measures the DC resistance of Primary and Secondary Windings to identify loose connections, broken strands,
+or poor contacts. Uses a calibrated Micro Ohm Resistance Meter.
+
+### Procedure
+1. Use a **calibrated Micro Ohm Resistance Meter** to conduct the Phase Resistance Test on the Primary and
+   Secondary Windings.
+2. **Before** conducting the Resistance Test, **short out the phases** of the Primary and Secondary Windings
+   — a residual charge present in the windings can damage the Resistance Meter.
+3. Make sure all connections at the Winding terminals are properly and securely made.
+4. Measure and record the **Ambient Temperature** on the Transformer Test Report.
+5. When measuring Resistance, always wait until the Resistance Meter has **discharged the leads** before
+   changing to the next phase.
+6. When taking measurements, wait until the Resistance measurement has **stabilised for approximately ±30 seconds**.
+7. Measure the Resistance (Ω) on all three **Primary (HV) Windings** and record on the Transformer Test Report.
+8. Measure the Resistance (Ω) on all three **Secondary (LV) Windings** in the case of a Three Phase Transformer,
+   and both coils in the case of a Single Phase Transformer.
+9. Record the Resistance results on the Transformer Test Report.
+
+> **WARNING:** An Open Circuit is extremely dangerous — it can cause Flash-Over in the Transformer, damage the instrument and harm the Tester. Never break the current circuit while the meter is injecting.
+
+---
+
+## 9. WP 36 — Induced Over Voltage Withstand Test (High Frequency Test)
+
+![WP 36 — Induced Over Voltage Withstand Test Procedure](images/preview/20260420_123716.jpg)
+
+### Purpose
+Verifies that the inter-turn and inter-layer insulation of the coils is sound and the design specification
+is correct by applying **twice the rated voltage** at increased frequency to the Secondary (LV) terminals.
+
+### Test Voltages
+
+| System Voltage | Test Voltage (New) | Test Voltage (Repeated — 75%) |
+|---|---|---|
+| 2.2 kV | 4.4 kV | 3.3 kV |
+| 3.3 kV | 6.6 kV | 5.0 kV |
+| 6.6 kV | 13 kV | 9.75 kV |
+| 11 kV | 22 kV | 16.5 kV |
+| 22 kV | 44 kV | 33 kV |
+
+### Procedure
+1. Apply the alternating test voltage to the **Secondary (LV) terminals** of the Transformer.
+2. The **Primary (HV) Terminals** will be open-circuited.
+3. A voltage of **twice the rated value** will be induced in the Secondary (LV) winding.
+4. To avoid excessive currents during the Test, the frequency must be **at least twice** the normal operating
+   frequency — use **150 Hz** (achieved via Motor and Generator set).
+5. Start the Induced Over Voltage Withstand Test by bolting supply leads from the Test Panel to the selected terminals.
+6. Switch **"ON"** supply and use the Variac to bring the Supply Voltage to **twice the rated voltage** for
+   New Windings and maintain for **40 seconds at 150 Hz**.
+7. **Repeated Transformers** (previously tested): Test Voltage shall not exceed **75%** of the rated Voltage
+   unless otherwise agreed by the Customer.
+8. Watch the Ammeter for signs of **excessive Current** — this indicates the insulation is breaking down before
+   the current is large enough to trip the breaker. Switch supply **"OFF"** immediately if current increases abnormally.
+9. Record the Test Voltage and Time on the Transformer Test Report.
+10. When using a frequency higher than 100 Hz, the testing time will be reduced proportionally.
+11. After the test, use the Variac to **rapidly bring the Voltage down to less than one third** of the Test Voltage
+    before switching **"OFF"**.
+12. The Transformer has **Passed** the Induced Overvoltage Withstand Test if **no collapse of the Test Voltage**
+    occurs during the test period.
+
+---
+
+## 10. WP 37 — Separate Source Voltage Withstand Test (Pressure Test)
+
+![WP 37 — Separate Source Voltage Withstand Test Procedure](images/preview/20260420_123718.jpg)
+
+### Purpose
+Tests the insulation integrity between each winding and earth by applying a separate AC voltage source
+to each winding in turn while the remaining windings, core, frame and tank are earthed.
+
+### Test Voltages
+
+| System Voltage | Test Voltage | Test Voltage (Repeated — 75%) |
+|---|---|---|
+| ≤ 1 000 V | 2.5 kV | 1.9 kV |
+| 3.3 kV | 16 kV | 12 kV |
+| 6.6 kV | 22 kV | 16.5 kV |
+| 11 kV | 28 kV | 21 kV |
+| 22 kV | 50 kV | 37.5 kV |
+| 33 kV | 70 kV | 52.5 kV |
+
+### Procedure
+1. The test is conducted by applying the Test Voltage to **each winding in turn**, while the remaining windings,
+   core, frame and tank of the Transformer are **connected together and earthed**.
+2. Single Phase voltage is obtained from a separate source using a Test Winding ratio **1000:1** of HV Transformer
+   (400 V → 100 000 V).
+3. A Multimeter is connected to the HV side to monitor voltage (reading = multimeter reading ÷ kV Divider Ratio).
+4. **To test the HV side:** Wire all HV Terminals together (flash test). All LV terminals wired together and
+   tightened to the tank Earthing Bolt.
+5. **To test the LV side:** Short out HV terminals and connect to earth.
+6. Connect the earth side of the voltage transformer to the earth bolt on the tank.
+7. Use copper wire to connect the HV terminal of the high voltage transformer to the required terminal of the
+   Transformer under test.
+8. Use the Variac to increase the Voltage to the required Test Voltage.
+9. Maintain the **Test Voltage for 60 seconds**.
+10. After 60 seconds, **rapidly decrease** the Test Voltage to Zero using the Variac.
+11. Switch off the instrument or allow the supply contact breaker to trip.
+12. Any **breakdown of insulation** will cause the Test Instrument or supply contact breaker to trip.
+13. When conducting Repeated tests, the Test Voltage shall not exceed **75%** of the original Test Voltage
+    unless otherwise agreed by the Customer.
+
+> **SAFETY:** The Test Transformer Supply Point must **always be Earthed** whenever Bridging or Un-bridging the Test Leads. Adhere to all safety requirements at all times.
+
+---
+
+## 11. WP 38 — Load & No Load Loss Test
+
+![WP 38 — Load and No Load Loss Test Procedure](images/preview/20260420_123722.jpg)
+
+### Purpose
+Measures the No Load Loss (Iron Loss) and Full Load Loss (Copper Loss) of the Transformer.
+Results are compared against SANS 780 specification limits.
+
+### Procedure
+
+**No Load Loss (Iron Loss):**
+1. Ensure the Test Bench is switched **"OFF"**.
+2. Connect Red, White and Blue leads to the **Secondary (LV) Bushings** of the Transformer.
+3. Supply **Rated Voltage** to the Terminals on the Secondary (LV) side of the Transformer.
+4. **Leave the HV Connections Open.**
+5. Switch Supply **"On"** from the Main Test Panel.
+6. Record No Load Loss Test Results — Volts, Current and Watts on the Transformer Test Report.
+
+**Full Load Loss (Copper Loss):**
+7. Fit the Supply Leads to the **HV Terminals**.
+8. On the Secondary (LV) side, **Short Out Terminals** with Copper Busbars or Copper Straps.
+9. Apply at least **50%** of the Rated Current (HV Current) to the HV Terminals from the Test Panel.
+10. Measure and record Losses, Volts, Current and Watts on the Transformer Test Report.
+11. Calculate the Impedance of the Transformer and refer to the Table.
+12. Compare the No Load and Full Load Losses to the **SANS 780 Specification**.
+
+### Impedance Voltage Range at Principal Tapping (SANS 780)
+
+| Rated Power P (kVA) | Impedance Range (%) |
+|---|---|
+| P < 200 | 3.0 – 4.5 |
+| 200 < P < 500 | 4.0 – 5.0 |
+| 500 < P < 1 250 | 4.5 – 5.5 |
+| 1 250 < P < 3 150 | 5.0 – 6.5 |
 
 ### Acceptance Criteria
-- Vk% must be within **±7.5%** of the nameplate value for distribution transformers (IEC 60076-11).
-- Standard SA distribution transformer Vk% values (SANS 780):
-  - 50 kVA – 500 kVA: **4.0%**
-  - 630 kVA – 2 500 kVA: **6.0%**
+- Permissible Full Load Losses and No Load Losses must **not exceed 15%** of specified values (SANS 780).
+- Full Load Losses and No Load Losses **combined must not exceed 10%** of Total Losses.
 
 ---
 
-## 7. Tan Delta (Dissipation Factor) Test
-**Status: HIGHLY RECOMMENDED (Diagnostic) — IEC 60250 / SANS 60076-3**
+## 12. WP 52 — Insulation Resistance Temperature Correction to 40°C
 
-Evaluates the overall health of the combined insulation system (paper + oil). Sensitive to moisture ingress and aging. Performed with a Tan Delta bridge (e.g., Megger DELTA 4000, Omicron Dirana).
+![WP 52 — IR Temperature Correction to 40°C Procedure](images/preview/20260420_123727.jpg)
 
-### Measurement Modes
-- **GST (Grounded Specimen Test):** HV winding to earth — detects bulk insulation degradation.
-- **UST (Ungrounded Specimen Test):** HV winding to LV winding — tests interwinding insulation.
+### Purpose
+When the Winding Temperature differs from 40°C, the measured IR value must be corrected to 40°C
+for comparison against standard minimum values.
 
-### Acceptance Criteria
+### Correction Formula
 
-| Condition | Tan δ Value | Interpretation |
-| :--- | :--- | :--- |
-| New transformer (at 20°C) | < 0.5% | Excellent |
-| In-service (acceptable) | 0.5% – 1.0% | Good |
-| Requires monitoring | 1.0% – 2.0% | Deteriorating |
-| Immediate action required | > 2.0% | Significant moisture or aging |
+```
+Rc = Kt × Rt
+```
 
-> **SA Climate Note:** In coastal regions (Durban, Cape Town) humidity accelerates paper insulation aging. Tan delta values above 1.5% on a transformer less than 10 years old warrants oil filtration and vacuum drying.
+Where:
+- `Rc` = Insulation Resistance corrected to 40°C (MΩ)
+- `Rt` = Measured Insulation Resistance at temperature t°C (MΩ)
+- `Kt` = Insulation Resistance temperature coefficient at t°C from SANS 780
 
----
+### Minimum Required IR Value
 
-## 8. Oil Diagnostics
-**Status: MANDATORY for Oil-Filled Units — SANS 290 / IEC 60156**
+```
+Rm = (1 + k) MΩ
+```
 
-### 8.1 Breakdown Voltage (BDV)
-Tests the dielectric strength of the insulating oil.
+Where:
+- `Rm` = Recommended minimum insulation resistance at 40°C (MΩ)
+- `k`  = Ratio of rated transformer voltage (in volts) to 1 000, as a number
 
-| Standard | Minimum BDV |
-| :--- | :--- |
-| SANS 290 (new oil) | ≥ 60 kV |
-| SANS 290 (service oil, 11–33 kV transformers) | ≥ 40 kV |
-| NRS 097-2 (Eskom distribution) | ≥ 50 kV |
+**Example Calculation — 33 kV Transformer:**
+```
+k  = 33 000 / 1 000 = 33
+Rm = (1 + 33) MΩ = 34 MΩ
+```
 
-### 8.2 Water Content (Karl Fischer Titration)
-
-| Application | Maximum Water Content |
-| :--- | :--- |
-| Transmission (≥ 132 kV) | < 10 ppm |
-| Distribution (11 kV – 33 kV) | < 20 ppm |
-| LV Distribution (≤ 11 kV) | < 30 ppm |
-
-### 8.3 Dissolved Gas Analysis (DGA) — SANS 60599
-DGA is the most powerful diagnostic tool for detecting incipient faults inside oil-filled transformers. Key fault gases and their significance:
-
-| Gas | Fault Indicated | Action Threshold |
-| :--- | :--- | :--- |
-| Hydrogen (H₂) | Partial discharge (corona) | > 100 ppm |
-| Methane (CH₄) | Thermal fault (< 300°C) | > 120 ppm |
-| Ethylene (C₂H₄) | Thermal fault (> 300°C) | > 50 ppm |
-| Acetylene (C₂H₂) | **Arcing / flashover** | **> 5 ppm** |
-| Carbon Monoxide (CO) | Solid insulation overheating | > 500 ppm |
-| Carbon Dioxide (CO₂) | Solid insulation aging | > 10 000 ppm |
-
-> **Critical:** Any detection of Acetylene (C₂H₂) above 5 ppm warrants immediate investigation. Acetylene is only produced at temperatures above 700°C, indicating arcing inside the tank.
+> **Note:** For insulation in good condition, IR readings of 10 to over 100 times the value of the recommended minimum Rm are not uncommon in practice. A reading just above Rm should be investigated.
 
 ---
 
-## 9. Sweep Frequency Response Analysis (SFRA)
-**Status: SPECIALIZED — IEC 60076-18 / CIGRE TB 342**
+## 13. Typical Transformer Test Specification
 
-SFRA detects mechanical deformation of the core and windings — winding displacement, core movement, or clamping loosening — that cannot be detected by electrical tests alone.
+The following is extracted from a typical customer Transformer Specification (Inland unit):
 
-### When to Perform SFRA
-- After a through-fault or close-in short circuit
-- After transport (especially by road in South Africa — rural roads cause vibration damage)
-- As a baseline test on commissioning of new large transformers (≥ 5 MVA)
-- If transformer shows unusual noise or vibration in service
+![Transformer Test Specification Sheet](images/preview/20260420_082548.jpg)
 
-### Interpretation
-Compare the measured frequency response curve against the baseline (FAT or previous site measurement). Deviations in specific frequency bands indicate:
-- **Low frequency (< 1 kHz):** Core deformation, clamping issues
-- **Mid frequency (1 kHz – 100 kHz):** Main winding deformation
-- **High frequency (> 100 kHz):** Lead connections, tap changers, local winding buckling
+| Parameter | Value |
+|---|---|
+| Temperature Rise | 60 / 65°C |
+| Ambient Temperature | 40°C |
+| Insulation Class | A @ 105°C |
+| Altitude (ASL) max | 1 800 m |
+| Environmental Finish | Inland |
 
----
+### Required Tests
 
-## 10. Summary of Test Sequence
+| Test | Required |
+|---|---|
+| Insulation Resistance Test | Yes |
+| Voltage Ratio & Polarity Test | Yes |
+| Winding Resistance | Yes |
+| Short Circuit Impedance & Load Loss (Copper Loss) | Yes |
+| No Load Loss & Current (Iron Loss) | Yes |
+| Di-electric Routine Tests (SANS 60076) | Yes |
+| Separate Source AC Withstand Voltage (Pressure Test) | Yes |
+| Induced Overvoltage Withstand (High Frequency Test) | Yes |
 
-The recommended test sequence for SA commissioning is:
+### Documents Issued with Completed Unit
 
-1. **Visual Inspection** — tank, bushings, silica gel, oil level, nameplate verification
-2. **IR & PI** — all three configurations (MANDATORY before energisation)
-3. **Winding Resistance** — all taps, temperature corrected
-4. **TTR** — all taps, all phases
-5. **Tan Delta** — GST and UST modes (if test equipment available)
-6. **Oil BDV & Water Content** — sample from bottom valve (MANDATORY oil-filled)
-7. **DGA** — baseline or diagnostic (MANDATORY oil-filled ≥ 500 kVA)
-8. **SFRA** — post-fault or post-transport
-9. **Short Circuit Impedance** — verify Vk% matches nameplate (FAT or commissioning)
-10. **Protection Scheme Verification** — see Engineering Guides: CT Secondary Injection
-
-> **Eskom / NRS 097-2 Note:** For transformers being connected to the Eskom network, submit all test results to the relevant Eskom regional office for review before energisation. Transformers ≥ 5 MVA typically require a witnessed FAT and SAT.
+| Document | Issued |
+|---|---|
+| General Arrangement Drawing | Yes |
+| Transformer Test Certificate | Yes |
+| Oil Test Certificate | Yes |

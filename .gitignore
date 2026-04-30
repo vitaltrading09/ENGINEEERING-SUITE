@@ -31,6 +31,10 @@ dist/
 Thumbs.db
 desktop.ini
 
+# ── Full-resolution phone photos (too large for GitHub — use preview/ folder) ──
+guides/content/images/2026*.jpg
+guides/content/images/2025*.jpg
+
 # ── App user data (created at runtime, never committed) ───────────────────────
 # Saved screen-report sessions
 *.srp.json
