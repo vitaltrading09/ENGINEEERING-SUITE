@@ -11,7 +11,6 @@ Transformer Test Certificate and Oil Test Certificate issued with every complete
 
 The tests required depend on the stage of manufacture or repair.
 
-![WP 19 — Master Test Schedule](images/preview/20260420_123730.jpg)
 
 ### a) Tests at Receiving of Transformer (Repair)
 
@@ -51,7 +50,6 @@ The tests required depend on the stage of manufacture or repair.
 
 ## 2. Mini Sub-Station Test Schedule (WP 24)
 
-![WP 24 — Mini Sub-Station, Switchgear & LV Panel Test Procedure](images/preview/20260420_124054.jpg)
 
 The Switchgear Supplier provides a MV Switchgear Test Certificate for each unit supplied.
 MV Switchgear Test Certificates are kept by the Quality Representative or Technical Director for record.
@@ -98,7 +96,6 @@ Before any test equipment is connected:
 
 ## 4. WP 31 — Insulation Resistance (Megger) Test
 
-![WP 31 — Insulation Resistance (Megger) Test Procedure](images/preview/20260420_123705.jpg)
 
 ### Purpose
 Measures leakage current through the insulation system to detect moisture ingress, surface contamination,
@@ -160,7 +157,6 @@ The following combinations are tested between Earth and individual components:
 
 ## 5. WP 32 — Turns Ratio Test
 
-![WP 32 — Transformer Ratio Test Procedure](images/preview/20260420_123707.jpg)
 
 ### Purpose
 Validates that the actual turns ratio matches the nameplate, confirms tap changer operation on all taps,
@@ -187,7 +183,6 @@ and verifies the Vector Group of the Winding.
 
 ## 6. WP 33 — Positive Sequence Impedance Test (Copper Loss)
 
-![WP 33 — Positive Sequence Impedance Test Procedure](images/preview/20260420_123709.jpg)
 
 ### Purpose
 Measures the Short Circuit Impedance (Vk%) and Load Loss (Copper Loss) of the Transformer.
@@ -251,7 +246,6 @@ Where:
 
 ## 7. WP 34 — Vector Group Test
 
-![WP 34 — Vector Group Test Procedure](images/preview/20260420_123711.jpg)
 
 ### Purpose
 The Vector Group Detection Test is done simultaneously with the Turns Ratio Test to determine whether
@@ -279,7 +273,6 @@ the transformer's measured results match the Design Vector Diagram.
 
 ## 8. WP 35 — Winding Resistance Test
 
-![WP 35 — Transformer Resistance Test Procedure](images/preview/20260420_123714.jpg)
 
 ### Purpose
 Measures the DC resistance of Primary and Secondary Windings to identify loose connections, broken strands,
@@ -306,7 +299,6 @@ or poor contacts. Uses a calibrated Micro Ohm Resistance Meter.
 
 ## 9. WP 36 — Induced Over Voltage Withstand Test (High Frequency Test)
 
-![WP 36 — Induced Over Voltage Withstand Test Procedure](images/preview/20260420_123716.jpg)
 
 ### Purpose
 Verifies that the inter-turn and inter-layer insulation of the coils is sound and the design specification
@@ -346,7 +338,6 @@ is correct by applying **twice the rated voltage** at increased frequency to the
 
 ## 10. WP 37 — Separate Source Voltage Withstand Test (Pressure Test)
 
-![WP 37 — Separate Source Voltage Withstand Test Procedure](images/preview/20260420_123718.jpg)
 
 ### Purpose
 Tests the insulation integrity between each winding and earth by applying a separate AC voltage source
@@ -389,7 +380,6 @@ to each winding in turn while the remaining windings, core, frame and tank are e
 
 ## 11. WP 38 — Load & No Load Loss Test
 
-![WP 38 — Load and No Load Loss Test Procedure](images/preview/20260420_123722.jpg)
 
 ### Purpose
 Measures the No Load Loss (Iron Loss) and Full Load Loss (Copper Loss) of the Transformer.
@@ -430,7 +420,6 @@ Results are compared against SANS 780 specification limits.
 
 ## 12. WP 52 — Insulation Resistance Temperature Correction to 40°C
 
-![WP 52 — IR Temperature Correction to 40°C Procedure](images/preview/20260420_123727.jpg)
 
 ### Purpose
 When the Winding Temperature differs from 40°C, the measured IR value must be corrected to 40°C
@@ -471,7 +460,6 @@ Rm = (1 + 33) MΩ = 34 MΩ
 
 The following is extracted from a typical customer Transformer Specification (Inland unit):
 
-![Transformer Test Specification Sheet](images/preview/20260420_082548.jpg)
 
 | Parameter | Value |
 |---|---|
