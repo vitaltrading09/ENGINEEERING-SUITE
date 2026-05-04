@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAT Checklist — MV RMU &amp; Transformer (Mini Substation)</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;color:#1a1a1a;font-size:13px}
+.page{max-width:1100px;margin:0 auto;padding:20px}
+.header{background:#003366;color:#fff;padding:16px 22px;border-radius:8px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-start}
+.header-left h1{font-size:18px;font-weight:700;margin-bottom:3px}
+.header-left .sub{font-size:12px;opacity:0.8}
+.header-right{text-align:right;font-size:11px;opacity:0.75;line-height:1.6}
+.meta-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.meta-field{background:#fff;border:1px solid #dde3ec;border-radius:6px;padding:8px 12px}
+.meta-label{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.meta-val{font-size:12px;color:#1a1a1a;border-bottom:1px solid #ccc;min-height:18px}
+.section-title{font-size:13px;font-weight:700;color:#fff;background:#003366;padding:7px 12px;border-radius:6px;margin:14px 0 4px}
+.sub-title{font-size:12px;font-weight:700;color:#003366;background:#D6E4F0;padding:6px 11px;border-radius:6px;margin:10px 0 3px}
+table{width:100%;border-collapse:collapse;font-size:11.5px;background:#fff;border:1px solid #dde3ec;border-radius:6px;overflow:hidden;margin-bottom:4px}
+thead tr{background:#003366}
+th{color:#fff;font-weight:600;padding:6px 8px;text-align:left;font-size:11px;white-space:nowrap}
+th.center{text-align:center}
+td{padding:5px 8px;border-bottom:0.5px solid #e8edf3;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#f8fafc}
+tr:hover td{background:#eef4ff}
+.check-cell{text-align:center;width:46px}
+.check-cell input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:#003366}
+.ref-cell{color:#556;font-size:10.5px;white-space:nowrap;max-width:130px}
+.remarks-cell input{width:100%;border:1px solid #d0d8e4;border-radius:4px;padding:3px 6px;font-size:11px;background:#fff;font-family:inherit}
+.remarks-cell input:focus{outline:none;border-color:#003366;background:#f0f5ff}
+.item-cell{display:flex;align-items:center;gap:4px}
+.item-text{flex:1;line-height:1.35}
+.info-btn{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;min-width:17px;border-radius:50%;background:#003366;color:#fff;font-size:9.5px;font-weight:700;cursor:pointer;border:none;line-height:1;flex-shrink:0}
+.info-btn:hover{background:#1a5599}
+.summary-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+.sum-card{background:#fff;border:1px solid #dde3ec;border-radius:8px;padding:12px;text-align:center}
+.sum-num{font-size:26px;font-weight:700}
+.sum-lbl{font-size:11px;color:#666;margin-top:2px}
+.signoff{background:#fff;border:1px solid #dde3ec;border-radius:8px;padding:16px;margin-top:16px}
+.signoff-title{font-size:13px;font-weight:700;color:#003366;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #003366}
+.result-options{display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap}
+.result-opt{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;padding:8px 14px;border:1px solid #dde3ec;border-radius:6px}
+.result-opt input{width:16px;height:16px;accent-color:#003366}
+.signoff-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.signoff-col h4{font-size:11px;font-weight:700;color:#fff;background:#003366;padding:5px 10px;border-radius:4px;margin-bottom:10px}
+.signoff-field{margin-bottom:10px}
+.signoff-field label{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:0.04em;display:block;margin-bottom:3px}
+.signoff-field input{width:100%;border:none;border-bottom:1px solid #999;padding:3px 0;font-size:12px;background:transparent;font-family:inherit}
+.signoff-field input:focus{outline:none;border-bottom-color:#003366}
+.overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:999;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.panel{background:#fff;border-radius:10px;max-width:560px;width:92%;max-height:85vh;overflow-y:auto;padding:22px 24px;position:relative;box-shadow:0 8px 32px rgba(0,0,40,0.18)}
+.panel-close{position:absolute;top:14px;right:16px;font-size:18px;cursor:pointer;color:#888;background:none;border:none;line-height:1;font-weight:300}
+.panel-close:hover{color:#1a1a1a}
+.panel-title{font-size:15px;font-weight:700;color:#003366;margin-bottom:3px;padding-right:24px}
+.panel-ref{font-size:11px;color:#888;margin-bottom:14px}
+.p-section{font-size:10.5px;font-weight:700;color:#556;text-transform:uppercase;letter-spacing:0.06em;margin:14px 0 5px;border-bottom:1px solid #eee;padding-bottom:3px}
+.p-body{font-size:12.5px;color:#1a1a1a;line-height:1.65}
+.p-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:5px}
+.p-table th{background:#003366;color:#fff;padding:5px 8px;font-weight:600;font-size:11px}
+.p-table td{padding:4px 8px;border-bottom:0.5px solid #e0e6f0}
+.p-table tr:last-child td{border-bottom:none}
+.p-table tr:nth-child(even) td{background:#f6f8fb}
+.warn-box{background:#fffbe6;border:1px solid #e0c840;border-radius:6px;padding:9px 12px;font-size:11.5px;color:#5a4400;margin-top:10px;line-height:1.55}
+.warn-box strong{color:#7a5c00}
+.step-list{padding-left:18px;font-size:12.5px;color:#1a1a1a;line-height:1.75}
+.criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.crit-pass{background:#eaf5df;border:1px solid #8dbf5c;border-radius:6px;padding:8px 10px}
+.crit-fail{background:#fdeaea;border:1px solid #e08080;border-radius:6px;padding:8px 10px}
+.crit-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.crit-pass .crit-label{color:#3a6e10}
+.crit-fail .crit-label{color:#8b2020}
+.crit-text{font-size:11.5px;line-height:1.5}
+.print-btn{background:#003366;color:#fff;border:none;padding:9px 20px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;margin-right:8px}
+.print-btn:hover{background:#1a5599}
+.export-btn{background:#fff;color:#003366;border:2px solid #003366;padding:9px 20px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer}
+.export-btn:hover{background:#f0f5ff}
+.toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:gap}
+.toolbar-left{font-size:12px;color:#556}
+.progress-bar{height:6px;background:#e0e8f0;border-radius:3px;margin-top:10px;overflow:hidden}
+.progress-fill{height:100%;background:#003366;border-radius:3px;transition:width 0.3s}
+@media print{
+  body{background:#fff;font-size:10px}
+  .header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .section-title,.sub-title{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  thead tr{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .toolbar,.print-btn,.export-btn,.info-btn{display:none!important}
+  .page{padding:8px}
+  .overlay{display:none!important}
+  table{page-break-inside:auto}
+  tr{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div class="header-left">
+    <h1>FACTORY ACCEPTANCE TEST (FAT) CHECKLIST</h1>
+    <div class="sub">MV Ring Main Unit (4-Way RMU) &amp; Distribution Transformer — Mini Sub-Station</div>
+  </div>
+  <div class="header-right">
+    Doc No: FAT-RMU-XFMR-001 &nbsp;|&nbsp; Rev: A<br>
+    Standards: SANS 780 / IEC 62271-200<br>
+    <span id="today-date"></span>
+  </div>
+</div>
+
+<div class="meta-grid">
+  <div class="meta-field"><div class="meta-label">Project / Site Name</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Contract / Order No.</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">FAT Date</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Transformer Serial No.</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">RMU Serial No.</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">kVA / HV kV / LV V</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Vector Group</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Impedance Uk%</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Manufacturer</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+</div>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    Completion: <strong id="pct">0%</strong>
+    <div class="progress-bar" style="width:240px;display:inline-block;vertical-align:middle;margin-left:8px"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+  </div>
+  <div>
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</div>
+
+<div id="checklist-body"></div>
+
+<div class="summary-bar">
+  <div class="sum-card"><div class="sum-num" id="cnt-pass" style="color:#2e7d10">0</div><div class="sum-lbl">Passed</div></div>
+  <div class="sum-card"><div class="sum-num" id="cnt-fail" style="color:#b71c1c">0</div><div class="sum-lbl">Failed / Snagged</div></div>
+  <div class="sum-card"><div class="sum-num" id="cnt-na" style="color:#555">0</div><div class="sum-lbl">N/A</div></div>
+  <div class="sum-card"><div class="sum-num" id="cnt-open" style="color:#c77b00">0</div><div class="sum-lbl">Outstanding</div></div>
+</div>
+
+<div class="signoff">
+  <div class="signoff-title">FAT Result &amp; Sign-Off</div>
+  <div class="result-options">
+    <label class="result-opt"><input type="radio" name="result" value="pass"> PASS — Approved for shipment</label>
+    <label class="result-opt"><input type="radio" name="result" value="conditional"> PASS WITH CONDITIONS (items outstanding)</label>
+    <label class="result-opt"><input type="radio" name="result" value="fail"> FAIL — NOT approved for shipment</label>
+  </div>
+  <div class="signoff-grid">
+    <div class="signoff-col">
+      <h4>Customer / Witness Representative</h4>
+      <div class="signoff-field"><label>Full Name</label><input type="text"></div>
+      <div class="signoff-field"><label>Designation</label><input type="text"></div>
+      <div class="signoff-field"><label>Company</label><input type="text"></div>
+      <div class="signoff-field"><label>Signature</label><input type="text" placeholder="Type name as signature"></div>
+      <div class="signoff-field"><label>Date</label><input type="date"></div>
+    </div>
+    <div class="signoff-col">
+      <h4>Manufacturer Representative (Transformco)</h4>
+      <div class="signoff-field"><label>Full Name</label><input type="text"></div>
+      <div class="signoff-field"><label>Designation</label><input type="text"></div>
+      <div class="signoff-field"><label>Company</label><input type="text"></div>
+      <div class="signoff-field"><label>Signature</label><input type="text" placeholder="Type name as signature"></div>
+      <div class="signoff-field"><label>Date</label><input type="date"></div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:12px;font-size:10.5px;color:#777;line-height:1.7;border-top:1px solid #dde3ec;padding-top:10px">
+  <strong>Notes:</strong> All electrical tests per SANS 780 and Transformco Work Procedures (WP 24, WP 31–38, WP 52). Any failure must be reported immediately to the Designer, Internal Sales Manager or Winding Foreman. Safety prerequisites (LOTO, earthing, PPE, residual charge discharge) must be confirmed before any test equipment is connected. MV Switchgear Test Certificate provided by switchgear supplier and kept on file by Quality Representative / Technical Director.
+</div>
+
+</div>
+
+<!-- INFO PANEL OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="panel" id="panel">
+    <button class="panel-close" onclick="closePanel()">&#x2715;</button>
+    <div class="panel-title" id="p-title"></div>
+    <div class="panel-ref" id="p-ref"></div>
+    <div id="p-body"></div>
+  </div>
+</div>
+
+<script>
+document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-ZA',{day:'2-digit',month:'long',year:'numeric'});
+
+const INFO = {
+  ir:{
+    title:"Insulation Resistance (Megger) Test — WP 31",
+    ref:"SANS 780 / WP 31",
+    purpose:"Measures leakage current through the insulation to detect moisture ingress, surface contamination or thermal ageing before a failure occurs. Uses a high-voltage DC Insulation Resistance Tester (Megger) capable of testing up to 10 kV DC.",
+    voltages:[["Transformer Rated Voltage","Megger Voltage Setting"],["1 000 V and below","2.5 kV"],["3 300 V","5 kV"],["6 600 V","10 kV"],["11 000 V","10 kV"],["22 000 V","2.5 kV"],["33 000 V","2.5 kV"]],
+    limits:[["Component","Minimum IR Value"],["New HV Coil to Earth","500 MΩ"],["New LV Coil to Earth","500 MΩ"],["Between new HV and LV Coils","500 MΩ"],["Overhauled HV Coils","500 MΩ"],["Overhauled LV Coils","500 MΩ"],["Core Clamps to Earth","400 MΩ"],["Core to Core Clamps","400 MΩ"]],
+    steps:["Earth all windings and discharge residual charge completely before connecting the Megger. A residual charge will give incorrect IR readings.","Select the correct Megger voltage for the transformer rated voltage (see table above).","Apply test voltage for no more than 60 seconds per measurement.","Measure and record the winding temperature. Correct reading to 40°C using WP 52 if winding temperature differs from 40°C.","Test the earth connection integrity when testing HV and LV coils.","Record all results on the Transformer Test Certificate."],
+    warn:"IR = 0 MΩ indicates complete breakdown or short to earth. IR < 100 MΩ indicates insulation is wet or leakage is present. If coils or core are wet, place in baking oven at 100°C for 12 to 18 hours and re-test. A reading just above the minimum should be investigated before energising.",
+    pass:"All readings at or above minimum specified IR values, corrected to 40°C.",
+    fail:"Any reading below the minimum value. A zero reading indicates complete breakdown — do not energise until cause is found."
+  },
+  ir52:{
+    title:"IR Temperature Correction to 40°C — WP 52",
+    ref:"SANS 780 / WP 52",
+    purpose:"When winding temperature differs from 40°C, the measured IR value must be corrected to 40°C for comparison against standard minimum values.",
+    steps:["Record winding temperature at time of test (t°C).","Obtain temperature coefficient Kt from SANS 780 table for temperature t.","Apply formula: Rc = Kt x Rt, where Rc = corrected IR at 40°C, Rt = measured IR at t°C.","Calculate minimum required IR: Rm = (1 + k) MOhm, where k = rated voltage in volts divided by 1000.","Example: 11 kV transformer — k = 11000/1000 = 11, Rm = (1 + 11) = 12 MOhm minimum.","Compare corrected reading Rc against Rm."],
+    pass:"Rc (corrected to 40°C) is equal to or greater than Rm.",
+    fail:"Rc is less than Rm — investigate insulation condition before energising."
+  },
+  ratio:{
+    title:"Turns Ratio Test — WP 32",
+    ref:"SANS 780 / WP 32",
+    purpose:"Validates that the actual turns ratio matches the nameplate, confirms tap changer operation on all taps, and verifies the Vector Group.",
+    steps:["Connect Ratiometer leads to H1, H2, H3 of the Primary (HV) windings.","H0 lead is connected only when a Neutral is present on the Primary winding.","Connect X1, X2, X3 leads to the Secondary (LV) windings and X0 to the Neutral Bar.","Enter the tap readings on the Ratiometer and press START.","Record all readings from the Ratiometer on the Transformer Test Certificate.","Compare measured ratio against the Designer's calculated value.","Test all tap positions where more than one tapping is provided.","The Vector Group is simultaneously confirmed by the Ratiometer."],
+    pass:"Measured ratio within ±0.5% of the calculated value. Vector group matches the Design Vector Diagram.",
+    fail:"Deviation greater than 0.5% or vector group does not match design."
+  },
+  vg:{
+    title:"Vector Group Test — WP 34",
+    ref:"SANS 780 / WP 34",
+    purpose:"Confirms that the transformer's measured vector group matches the Design Vector Diagram. Conducted simultaneously with the Turns Ratio Test.",
+    steps:["Short circuit Phase A on the Secondary (HV) side with Phase a on the Primary (LV) side using the selector switch.","Connect leads from the test panel to the Primary (HV) side — this provides 400 V output.","Connect Multimeter leads to S1 and S2 connectors on the test panel.","Measure voltages between secondary and primary terminals: A-b, B-b, C-b, B-c, C-c.","Use the voltage readings to draw up the Vector Diagram.","Compare the drawn diagram against the Design Vector Diagram.","Switch off supply and remove Multimeter after test."],
+    pass:"Drawn vector diagram matches the Design Vector Diagram exactly in angular displacement and polarity.",
+    fail:"Any mismatch in phase displacement, polarity or winding arrangement."
+  },
+  wr:{
+    title:"Winding Resistance Test — WP 35",
+    ref:"SANS 780 / WP 35",
+    purpose:"Measures the DC resistance of Primary and Secondary windings to identify loose connections, broken strands or poor contacts. Uses a calibrated Micro Ohm Resistance Meter.",
+    steps:["Short out all phases of Primary and Secondary windings before connecting the meter — residual charge can damage the instrument.","Record the ambient temperature on the Transformer Test Certificate.","Connect the calibrated Micro Ohm Resistance Meter to the winding terminals securely.","Measure resistance on all three Primary (HV) windings.","Measure resistance on all three Secondary (LV) windings.","Allow each reading to stabilise for approximately 30 seconds before recording.","Discharge the instrument leads between phase measurements before moving to the next phase.","Record all results on the Transformer Test Certificate."],
+    warn:"DANGER — OPEN CIRCUIT HAZARD: Never break the current circuit while the Resistance Meter is injecting current. An open circuit can cause flash-over in the transformer, damage the instrument and seriously injure the Tester. Always discharge leads before moving connections.",
+    pass:"All three phase resistances balanced within acceptable tolerance. Values agree with the Designer's specification.",
+    fail:"Significant imbalance between phases, open circuit reading, or values outside Designer specification — indicates broken strands, loose connections or faulty joints."
+  },
+  impedance:{
+    title:"Positive Sequence Impedance / Load Loss — WP 33 / WP 38",
+    ref:"SANS 780 / WP 33 / WP 38",
+    purpose:"Measures the Short Circuit Impedance (Uk%) and Load Loss (Copper Loss) of the transformer. Load loss comprises I²R losses in the windings plus stray losses due to eddy currents and leakage flux at full load.",
+    voltages:[["Rated Voltage","Test Voltage"],["1 000 V","50 V"],["3 000 V","150 V"],["6 000 V","280 V"],["11 000 V","400 V"],["22 000 V","800 V"]],
+    limits:[["Rated Power","Impedance Range (SANS 780)"],["P < 200 kVA","3.0 – 4.5 %"],["200 kVA to 500 kVA","4.0 – 5.0 %"],["500 kVA to 1 250 kVA","4.5 – 5.5 %"],["1 250 kVA to 3 150 kVA","5.0 – 6.5 %"]],
+    steps:["Connect test cable leads to the Primary (HV) side of the transformer.","Short the Secondary (LV) side connections (excluding Neutral) with drilled copper bars or flexible links — cross-section must carry full load current, contacts must be tight.","Calculate Full Load Current on HV and LV sides.","Use Variac to increase current to Full Load Current on HV side.","Record Voltage, Current and Watts readings on the Power Analyser.","Calculate Uk% using the appropriate formula.","Correct Load Loss to reference temperature of 75°C.","Compare results against SANS 780 limits for the rated kVA."],
+    pass:"Uk% falls within the SANS 780 range for the rated kVA. Load Loss does not exceed specified value by more than 15%.",
+    fail:"Uk% outside SANS 780 range or Load Loss exceeds specified value by more than 15%."
+  },
+  nll:{
+    title:"No-Load Loss and Excitation Current — WP 38",
+    ref:"SANS 780 / WP 38",
+    purpose:"Measures the No-Load Loss (Iron Loss / core loss) and No-Load Current at rated voltage with the HV winding open circuit.",
+    steps:["Ensure test bench is switched OFF.","Connect supply leads (Red, White, Blue) to the Secondary (LV) bushings.","Leave HV connections open circuit.","Apply rated voltage to the LV terminals.","Switch supply ON from the main test panel.","Record No-Load Loss (Watts), Voltage and No-Load Current (%) on the Transformer Test Certificate."],
+    pass:"No-Load Loss within 15% of the specified value. Combined No-Load and Full Load losses do not exceed 110% of total specified losses (SANS 780).",
+    fail:"No-Load Loss exceeds specified value by more than 15%, or combined losses exceed 110% of total specified."
+  },
+  induced:{
+    title:"Induced Overvoltage Withstand (High Frequency Test) — WP 36",
+    ref:"SANS 780 / WP 36",
+    purpose:"Verifies that the inter-turn and inter-layer insulation of the coils is sound by applying twice the rated voltage at increased frequency to the LV terminals. HV terminals are open circuit.",
+    voltages:[["System Voltage","New Transformer (Test V)","Repeated Transformer (75%)"],["2.2 kV","4.4 kV","3.3 kV"],["3.3 kV","6.6 kV","5.0 kV"],["6.6 kV","13.0 kV","9.75 kV"],["11 kV","22 kV","16.5 kV"],["22 kV","44 kV","33 kV"]],
+    steps:["Connect supply leads from the test panel to the LV (Secondary) terminals. Leave HV terminals open circuit.","Set test frequency to 150 Hz using the Motor and Generator set — this is required to avoid excessive magnetising current at double voltage.","Use Variac to raise voltage to the required test voltage (2x rated for new, 75% of that for repeated).","Maintain test voltage for 40 seconds at 150 Hz for new transformers.","For repeated (previously tested) transformers: test voltage must not exceed 75% of original unless otherwise agreed with customer.","Monitor the Ammeter continuously throughout the test. If current rises abnormally, switch off immediately — this indicates insulation breakdown.","After the test period, use the Variac to rapidly reduce voltage to less than one third of test voltage before switching OFF.","Record the test voltage and duration on the Transformer Test Certificate."],
+    warn:"Never switch off at full test voltage — always reduce to less than 1/3 of test voltage via Variac first. Monitor ammeter throughout; abnormal current rise means insulation is breaking down before the breaker trips.",
+    pass:"No collapse of test voltage occurs during the full test period.",
+    fail:"Collapse of test voltage or abnormal ammeter reading during the test period."
+  },
+  pressure:{
+    title:"Separate Source Voltage Withstand (Pressure Test) — WP 37",
+    ref:"SANS 780 / WP 37",
+    purpose:"Tests insulation integrity between each winding and earth by applying a separate AC voltage source to each winding in turn, with all other windings, core, frame and tank earthed.",
+    voltages:[["System Voltage","New Transformer (Test V)","Repeated Transformer (75%)"],["1 000 V and below","2.5 kV","1.9 kV"],["3.3 kV","16 kV","12 kV"],["6.6 kV","22 kV","16.5 kV"],["11 kV","28 kV","21 kV"],["22 kV","50 kV","37.5 kV"],["33 kV","70 kV","52.5 kV"]],
+    steps:["To test HV winding: connect all HV terminals together (flash test). Connect all LV terminals and tank together and earth to the tank earthing bolt.","To test LV winding: short out HV terminals and connect to earth. Test LV side.","Connect earth side of the high voltage test transformer to the tank earth bolt.","Use Variac to increase voltage to the required test level.","Maintain test voltage for 60 seconds.","After 60 seconds, rapidly decrease the voltage to zero using the Variac.","Repeated transformers: test voltage must not exceed 75% of original test voltage unless agreed with customer.","Any breakdown of insulation will cause the test instrument or supply breaker to trip."],
+    warn:"The test transformer supply MUST always be earthed whenever bridging or un-bridging the test leads. Never work on test leads while supply is live. Adhere to all safety requirements at all times.",
+    pass:"No breakdown of insulation — test instrument or supply breaker does NOT trip during the 60-second test.",
+    fail:"Test instrument or supply breaker trips during the test — indicates insulation breakdown."
+  },
+  irRmu:{
+    title:"Insulation Resistance — MV Switchgear (WP 24 / WP 31)",
+    ref:"WP 24 / SANS 780",
+    purpose:"The MV switchgear manufacturer provides a full Switchgear Test Certificate for each unit. The Tester additionally performs IR tests between each phase and earth, and between phases on the LV panel, to confirm no breakdown of insulation is evident per WP 24.",
+    steps:["Confirm the MV Switchgear Test Certificate from the switchgear supplier is on file with the Quality Representative or Technical Director.","With LBS in open position, apply Megger to Phase A to Earth, B to Earth, and C to Earth in turn.","Test phase-to-phase combinations: A to B, B to C, A to C.","Test the LV panel — each phase to earth at 500 V dc.","Record winding temperature and all results."],
+    pass:"All phase-to-earth readings ≥ 500 MΩ. All phase-to-phase readings ≥ 500 MΩ. LV panel readings ≥ 500 MΩ at 500 V dc.",
+    fail:"Any reading below 500 MΩ indicates insulation breakdown, moisture ingress or contamination — investigate before energising."
+  },
+  switching:{
+    title:"Switching Device Operation — RMU",
+    ref:"IEC 62271-200 / IEC 62271-103",
+    purpose:"Verifies that all Load Break Switches (LBS), Earth Switches and mechanical interlocks operate correctly and smoothly.",
+    steps:["Manually operate each LBS through a minimum of 5 full open/close cycles — operation must be smooth with no sticking.","Operate each Earth Switch through a minimum of 3 full open/close cycles.","Test mechanical interlock: attempt to close Earth Switch with LBS closed — this must be impossible.","Test key interlock if fitted.","For motorised drives: test operation at 80% of rated supply voltage (minimum operating voltage) and at 110% of rated supply voltage (maximum operating voltage).","Confirm ON / OFF / EARTH indicators show correct position at all times."],
+    pass:"All operations smooth, no sticking, all position indicators correct, all interlocks prevent unsafe operation, motorised drives operate within voltage band.",
+    fail:"Any sticking, mis-indication, interlock failure, or motorised drive failing to operate within the voltage band."
+  },
+  buchholz:{
+    title:"Transformer Protection Devices — Buchholz, OTI, Pressure Relief",
+    ref:"SANS 780 / Spec",
+    purpose:"Verifies that the Buchholz relay, Oil Temperature Indicator (OTI), pressure relief device and oil level alarm all operate correctly and are wired to the correct outputs on the RMU T-off bay.",
+    steps:["Test Buchholz relay float operation — alarm contact must close at the correct float level.","Test Buchholz relay surge operation — trip contact must close under surge condition.","Verify OTI alarm contact closes at the temperature set on the settings sheet.","Verify OTI trip contact closes at the trip temperature set on the settings sheet.","Test pressure relief device operation if applicable.","Test oil level low alarm contact operation.","Trace all alarm and trip wiring to confirm correct termination at RMU bay terminals per wiring schedule and SLD.","Confirm RMU T-off bay opens correctly in response to a transformer protection trip signal."],
+    pass:"All protection contacts operate at correct set points. Wiring confirmed correct per SLD and wiring schedule. RMU T-off bay opens on protection trip.",
+    fail:"Any contact failing to operate at set point, incorrect trip/alarm level, or miswired output."
+  }
+};
+
+const SECTIONS=[
+  {title:"1. Documentation Review",rows:[
+    {item:"Transformer Test Certificate issued and signed by approved Tester",ref:"Transformco QA"},
+    {item:"Oil Test Certificate issued",ref:"Transformco QA"},
+    {item:"MV Switchgear Test Certificate from switchgear supplier on file",ref:"WP 24"},
+    {item:"Nameplate data matches PO: kVA, HV kV, LV V, Uk%, vector group, serial no.",ref:"PO / SANS 780"},
+    {item:"General arrangement drawing matches purchase order",ref:"GA Drawing"},
+    {item:"Approved single line diagram (SLD) available",ref:"SLD"},
+    {item:"O&M manual available",ref:"Manufacturer"},
+  ]},
+  {title:"2. Visual & Mechanical — Transformer",rows:[
+    {item:"No oil leaks on tank, radiators, conservator or buchholz relay connections",ref:"Visual"},
+    {item:"HV and LV bushings correct type, undamaged and clean",ref:"Visual"},
+    {item:"Tap changer (OCTC/OLTC) present if specified — position and range correct",ref:"Spec"},
+    {item:"Oil level indicator reading within normal range",ref:"Visual"},
+    {item:"Silica gel breather fitted and colour indicates active (blue / dry)",ref:"Visual"},
+    {item:"Buchholz relay fitted and connections correct (ONAN units)",ref:"SANS 780"},
+    {item:"Oil Temperature Indicator (OTI) fitted and set per specification",ref:"Spec"},
+    {item:"Pressure relief device fitted",ref:"SANS 780"},
+    {item:"Rating plate data confirmed correct — all fields match PO",ref:"SANS 780"},
+    {item:"Terminal labels correct: HV = A, B, C and LV = a, b, c, n",ref:"SANS 780"},
+    {item:"Tank earthing boss present and bonded",ref:"Visual"},
+    {item:"Transport locking bolts removed before testing",ref:"Commissioning"},
+  ]},
+  {title:"3. Visual & Mechanical — RMU",rows:[
+    {item:"No visible damage, dents or corrosion on enclosure",ref:"Visual"},
+    {item:"Correct number of bays: 2x ring + 1x T-off + 1x spare/metering",ref:"SLD"},
+    {item:"Bay identification labels correct per SLD (L1, L2, T1 etc.)",ref:"SLD"},
+    {item:"ON / OFF / EARTH position indicators visible and clear on each bay",ref:"IEC 62271-200"},
+    {item:"Earthing busbar present and correctly labelled",ref:"IEC 62271-200"},
+    {item:"SF6 gas pressure indicator reading in normal zone (if SF6 type)",ref:"Manufacturer"},
+    {item:"Cable entry arrangements (quantity and routing) match GA drawing",ref:"GA Drawing"},
+    {item:"CT / VT ratios correct per specification — verified on nameplate",ref:"Spec / SLD"},
+    {item:"Padlock provision on all switching devices",ref:"Safety spec"},
+  ]},
+  {title:"4. Visual & Mechanical — Mini Sub Integration",rows:[
+    {item:"RMU and transformer physically mated correctly, fixings torqued",ref:"Manufacturer spec"},
+    {item:"HV connections between RMU T-off bay and transformer HV bushings secure",ref:"Visual"},
+    {item:"LV cable box / LV connections correctly installed and secured",ref:"Visual"},
+    {item:"Earthing continuity: RMU enclosure to transformer tank to HV earth bar",ref:"Visual"},
+    {item:"IP rating of combined assembly maintained at all interconnections",ref:"IEC 62271-200"},
+  ]},
+  {title:"5. Electrical Tests — Transformer",sub:true,rows:[
+    {item:"WP 31 — IR Test: HV Coils to Earth  (record: ___ MOhm @ ___°C)",ref:"WP 31 / SANS 780",info:"ir"},
+    {item:"WP 31 — IR Test: LV Coils to Earth  (record: ___ MOhm @ ___°C)",ref:"WP 31 / SANS 780",info:"ir"},
+    {item:"WP 31 — IR Test: HV Coils to LV Coils  (record: ___ MOhm)",ref:"WP 31 / SANS 780",info:"ir"},
+    {item:"WP 31 — IR Test: Core Clamps to Earth  (record: ___ MOhm)",ref:"WP 31 / SANS 780",info:"ir"},
+    {item:"WP 52 — IR corrected to 40°C: confirmed meets minimum Rm",ref:"WP 52 / SANS 780",info:"ir52"},
+    {item:"WP 32 — Turns Ratio: all 3 phases, all tap positions — within ±0.5%",ref:"WP 32 / SANS 780",info:"ratio"},
+    {item:"WP 34 — Vector Group confirmed matches Design Vector Diagram",ref:"WP 34 / SANS 780",info:"vg"},
+    {item:"WP 35 — Winding Resistance: all HV phases  (record: A=___ B=___ C=___ Ohm)",ref:"WP 35 / SANS 780",info:"wr"},
+    {item:"WP 35 — Winding Resistance: all LV phases  (record: a=___ b=___ c=___ Ohm)",ref:"WP 35 / SANS 780",info:"wr"},
+    {item:"WP 33 — Positive Sequence Impedance Uk%  (record: ___%) within SANS 780 range",ref:"WP 33 / SANS 780",info:"impedance"},
+    {item:"WP 38 — Load Loss at rated current corrected to 75°C  (record: ___ W)",ref:"WP 38 / SANS 780",info:"impedance"},
+    {item:"WP 38 — No-Load Loss at rated voltage  (record: ___ W)",ref:"WP 38 / SANS 780",info:"nll"},
+    {item:"WP 38 — No-Load Current (%)  (record: ___%) ",ref:"WP 38 / SANS 780",info:"nll"},
+    {item:"WP 36 — Induced Overvoltage Withstand: no collapse of voltage during test period",ref:"WP 36 / SANS 780",info:"induced"},
+    {item:"WP 37 — Separate Source Withstand (Pressure Test): HV winding — no breakdown",ref:"WP 37 / SANS 780",info:"pressure"},
+    {item:"WP 37 — Separate Source Withstand (Pressure Test): LV winding — no breakdown",ref:"WP 37 / SANS 780",info:"pressure"},
+  ]},
+  {title:"6. Electrical Tests — RMU",sub:true,rows:[
+    {item:"WP 24/31 — IR Test: Phase A to Earth (LBS open)  (record: ___ MOhm)",ref:"WP 24 / SANS 780",info:"irRmu"},
+    {item:"WP 24/31 — IR Test: Phase B to Earth (LBS open)  (record: ___ MOhm)",ref:"WP 24 / SANS 780",info:"irRmu"},
+    {item:"WP 24/31 — IR Test: Phase C to Earth (LBS open)  (record: ___ MOhm)",ref:"WP 24 / SANS 780",info:"irRmu"},
+    {item:"WP 24/31 — IR Test: Phase-to-phase A-B, B-C, A-C  (record: ___ MOhm)",ref:"WP 24 / SANS 780",info:"irRmu"},
+    {item:"WP 24/31 — IR Test: LV Panel each phase to earth  (record: ___ MOhm)",ref:"WP 24 / SANS 780",info:"irRmu"},
+    {item:"Switching Device: each LBS minimum 5 open/close operations, smooth",ref:"IEC 62271-103",info:"switching"},
+    {item:"Switching Device: each Earth Switch minimum 3 operations",ref:"IEC 62271-200",info:"switching"},
+    {item:"Mechanical interlock: ES cannot close with LBS closed — confirmed",ref:"IEC 62271-200",info:"switching"},
+    {item:"Motorised drive (if fitted): tested at 80% and 110% rated voltage",ref:"IEC 62271-200",info:"switching"},
+    {item:"Earthing continuity: RMU enclosure to earth bar — record: ___ Ohm (must be ≤ 0.1 Ohm)",ref:"Test"},
+  ]},
+  {title:"7. Integrated Tests — Mini Substation",sub:true,rows:[
+    {item:"Transformer protection trip (Buchholz/OTI alarm) wired to correct RMU T-off bay output",ref:"SLD / Wiring Schedule",info:"buchholz"},
+    {item:"OTI alarm contact confirmed operational at set point per settings sheet",ref:"Settings sheet",info:"buchholz"},
+    {item:"OTI trip contact confirmed operational at set point per settings sheet",ref:"Settings sheet",info:"buchholz"},
+    {item:"Buchholz relay alarm contact confirmed operational",ref:"SANS 780",info:"buchholz"},
+    {item:"Buchholz relay trip contact confirmed operational",ref:"SANS 780",info:"buchholz"},
+    {item:"RMU T-off bay confirmed to open correctly on transformer protection trip",ref:"SLD",info:"buchholz"},
+    {item:"LV neutral earthing connection verified — solid or resistance earthed per spec",ref:"Spec"},
+    {item:"Overall assembly correct for dispatch — no loose fittings, covers secured",ref:"Visual"},
+  ]},
+];
+
+let totalRows=0;
+SECTIONS.forEach(s=>totalRows+=s.rows.length);
+let counters={pass:0,fail:0,na:0};
+
+function updateCounts(){
+  document.getElementById('cnt-pass').textContent=counters.pass;
+  document.getElementById('cnt-fail').textContent=counters.fail;
+  document.getElementById('cnt-na').textContent=counters.na;
+  const done=counters.pass+counters.fail+counters.na;
+  document.getElementById('cnt-open').textContent=totalRows-done;
+  const pct=Math.round(done/totalRows*100);
+  document.getElementById('pct').textContent=pct+'%';
+  document.getElementById('prog').style.width=pct+'%';
+}
+
+function buildChecklist(){
+  const body=document.getElementById('checklist-body');
+  let rowId=0;
+  SECTIONS.forEach(sec=>{
+    const st=document.createElement('div');
+    st.className=sec.sub?'sub-title':'section-title';
+    st.textContent=sec.title;
+    body.appendChild(st);
+    const tbl=document.createElement('table');
+    tbl.innerHTML=`<thead><tr>
+      <th style="width:36%">Test / Check Item</th>
+      <th style="width:13%">Reference</th>
+      <th class="center" style="width:48px">Pass</th>
+      <th class="center" style="width:48px">Fail</th>
+      <th class="center" style="width:40px">N/A</th>
+      <th class="center" style="width:58px">Snag<br>Attended</th>
+      <th class="center" style="width:58px">Not<br>Attended</th>
+      <th>Remarks / Measured Value</th>
+    </tr></thead>`;
+    const tbody=document.createElement('tbody');
+    sec.rows.forEach(r=>{
+      const id=rowId++;
+      const tr=document.createElement('tr');
+      const infoBtn=r.info?`<button class="info-btn" onclick="openPanel('${r.info}')" title="Test procedure, voltages and acceptance criteria">i</button>`:'';
+      tr.innerHTML=`
+        <td><div class="item-cell"><span class="item-text">${r.item}</span>${infoBtn}</div></td>
+        <td class="ref-cell">${r.ref}</td>
+        <td class="check-cell"><input type="checkbox" data-id="${id}" data-type="pass" onchange="handleCheck(this)"></td>
+        <td class="check-cell"><input type="checkbox" data-id="${id}" data-type="fail" onchange="handleCheck(this)"></td>
+        <td class="check-cell"><input type="checkbox" data-id="${id}" data-type="na" onchange="handleCheck(this)"></td>
+        <td class="check-cell"><input type="checkbox"></td>
+        <td class="check-cell"><input type="checkbox"></td>
+        <td class="remarks-cell"><input type="text" placeholder=""></td>`;
+      tbody.appendChild(tr);
+    });
+    tbl.appendChild(tbody);
+    body.appendChild(tbl);
+  });
+}
+
+function handleCheck(cb){
+  const id=cb.dataset.id;const type=cb.dataset.type;
+  const types=['pass','fail','na'];
+  if(cb.checked){
+    types.forEach(t=>{
+      if(t!==type){
+        const o=document.querySelector(`input[data-id="${id}"][data-type="${t}"]`);
+        if(o&&o.checked){o.checked=false;counters[t]--;}
+      }
+    });
+    counters[type]++;
+  }else{counters[type]--;}
+  updateCounts();
+}
+
+function openPanel(key){
+  const d=INFO[key];if(!d)return;
+  document.getElementById('p-title').textContent=d.title;
+  document.getElementById('p-ref').textContent=d.ref;
+  let html='';
+  if(d.purpose)html+=`<div class="p-section">Purpose</div><div class="p-body">${d.purpose}</div>`;
+  if(d.voltages){
+    html+=`<div class="p-section">Test Voltages</div><table class="p-table"><thead><tr>${d.voltages[0].map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+    d.voltages.slice(1).forEach(r=>{html+=`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`;});
+    html+=`</tbody></table>`;
+  }
+  if(d.limits){
+    html+=`<div class="p-section">Acceptance Limits</div><table class="p-table"><thead><tr>${d.limits[0].map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+    d.limits.slice(1).forEach(r=>{html+=`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`;});
+    html+=`</tbody></table>`;
+  }
+  if(d.steps){
+    html+=`<div class="p-section">Procedure (${d.ref})</div><ol class="step-list">`;
+    d.steps.forEach(s=>{html+=`<li>${s}</li>`;});
+    html+=`</ol>`;
+  }
+  if(d.warn)html+=`<div class="warn-box"><strong>Warning / Note:</strong> ${d.warn}</div>`;
+  if(d.pass||d.fail){
+    html+=`<div class="p-section">Result Criteria</div><div class="criteria-grid">`;
+    if(d.pass)html+=`<div class="crit-pass"><div class="crit-label">Pass</div><div class="crit-text">${d.pass}</div></div>`;
+    if(d.fail)html+=`<div class="crit-fail"><div class="crit-label">Fail</div><div class="crit-text">${d.fail}</div></div>`;
+    html+=`</div>`;
+  }
+  document.getElementById('p-body').innerHTML=html;
+  document.getElementById('overlay').classList.add('open');
+}
+function closePanel(){document.getElementById('overlay').classList.remove('open');}
+document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)closePanel();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePanel();});
+
+buildChecklist();
+updateCounts();
+</script>
+</body>
+</html>

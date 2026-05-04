@@ -6,6 +6,7 @@ category = sidebar section heading shown above this entry.
 """
 
 from calculators.voltage_drop.voltage_drop_widget import VoltageDropWidget
+from checklists.checklists_widget import ChecklistsWidget
 from calculators.pv_combined.pv_combined_widget import PVSystemWidget
 from calculators.cable_ccc.cable_ccc_widget import CableCCCWidget
 from calculators.short_circuit.short_circuit_widget import ShortCircuitWidget
@@ -62,6 +63,14 @@ CALCULATORS = [
         "widget_class": ScreenReportWidget,
         "scrollable":   False,   # handles scrolling internally per tab
         "category":     "TOOLS",
+    },
+    {
+        "name":         "Checklists",
+        "subtitle":     "FAT, Commissioning & Inspection Forms",
+        "icon":         "fa5s.clipboard-check",
+        "widget_class": ChecklistsWidget,
+        "scrollable":   False,
+        "category":     "",
     },
     {
         "name":         "Datasheet Library",
