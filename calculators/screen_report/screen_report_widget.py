@@ -1693,6 +1693,8 @@ class ScreenReportWidget(BaseCalculator):
                       textColor=c_text)
         sty_key  = PS("ke",  fontSize=10, fontName="Helvetica-Bold",
                       textColor=c_sub)
+        sty_keyw = PS("kew", fontSize=10, fontName="Helvetica-Bold",
+                      textColor=white)   # white variant for dark header rows
         sty_cap  = PS("ca",  fontSize=9,  fontName="Helvetica-Oblique",
                       textColor=c_sub, spaceAfter=4)
         sty_sl   = PS("sl",  fontSize=9,  fontName="Helvetica",
@@ -1711,8 +1713,7 @@ class ScreenReportWidget(BaseCalculator):
         story.append(HRFlowable(width="100%", thickness=2.5,
                                 color=c_green, spaceAfter=10))
         story.append(Paragraph(title, sty_ti))
-        story.append(HRFlowable(width="100%", thickness=0.5,
-                                color=c_hr, spaceAfter=14))
+        story.append(Spacer(1, 14))
 
         def kv(k, v):
             return [Paragraph(k, sty_key), Paragraph(v or "—", sty_body)]
@@ -1743,8 +1744,8 @@ class ScreenReportWidget(BaseCalculator):
         captured = [c for c in self._cards if not c.is_placeholder]
 
         toc_data = [
-            [Paragraph("#", sty_key),
-             Paragraph("Caption / Sub-heading", sty_key)],
+            [Paragraph("#", sty_keyw),
+             Paragraph("Caption / Sub-heading", sty_keyw)],
         ]
         for i, c in enumerate(captured, 1):
             toc_data.append([Paragraph(str(i), sty_body),
