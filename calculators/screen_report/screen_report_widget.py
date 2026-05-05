@@ -69,6 +69,82 @@ _BUILTIN_TEMPLATES: dict = {
             "Power Regulation",
         ],
     },
+    "VCOM Setup (Solar Online Cloud)": {
+        "title":       "Solar Online Cloud Setup (VCOM)",
+        "unit_prefix": "CTR",
+        "unit_pad":    1,
+        "preamble": [
+            # ── System Section ────────────────────────────────────────────────
+            "System Section — Technical Data Tab",
+            "System Section — System Configuration Tab",
+            "System Configuration Tab Settings — Technical Data (Subsystems)",
+            "System Section — Responsibilities Tab",
+            # ── Data Sources Section ──────────────────────────────────────────
+            "Data Sources — Administration Sub Section",
+            "Data Sources — Administration => Inverter",
+            "Data Sources — Administration => Devices",
+            "Data Sources — Administration => Digital Signals",
+            # ── Monitoring Section ────────────────────────────────────────────
+            "Monitoring — Alarms Tab (Standard Alarms Overview)",
+            "Monitoring — Total Outage Alarm",
+            "Monitoring — Communication Loss Alarm",
+            "Monitoring — Irradiance Sensor Alarm",
+            "Monitoring — Data Outage Alarm",
+            "Monitoring — Battery Alarms (State of Charge)",
+            # ── Calculations — Terms ──────────────────────────────────────────
+            "Calculations — Terms Tab (Layout Overview)",
+            "Calculations — Terms Editor (Page 1)",
+            "Calculations — Terms Editor (Page 2)",
+            "Calculations — Terms Editor (Measured Values Overview)",
+            # ── Calculations — Simulation ─────────────────────────────────────
+            "Calculations — Simulation Parameters",
+            # ── Calculations — Yield Forecast ─────────────────────────────────
+            "Calculations — Yield Forecast Sub Tab",
+            "Calculations — Yield Forecast: Irradiance Tab",
+            "Calculations — Yield Forecast: Irradiance Horizontal Tab",
+            # ── Calculations — Performance Ratio ──────────────────────────────
+            "Calculations — Performance Ratio: Source of Data (E_feed-in / H_POA)",
+            "Calculations — Performance Ratio: Aggregation & Additional Parameters",
+            "Calculations — Performance Ratio: Temperature, Degradation & Power Control",
+            # ── Remaining Calculation Tabs ────────────────────────────────────
+            "Calculations — Target PR Tab",
+            "Calculations — System Availability Tab",
+            "Calculations — Target Availability Tab",
+        ],
+        "per_unit": [],
+    },
+    "Bluelog Setup (Solar Controller)": {
+        "title":       "Solar Controller Setup (Bluelog)",
+        "unit_prefix": "CTR",
+        "unit_pad":    1,
+        "preamble": [
+            # ── Cockpit ───────────────────────────────────────────────────────
+            "Cockpit Section",
+            # ── PV Plant Section ──────────────────────────────────────────────
+            "PV Plant — Basic Data Sub Section",
+            "PV Plant — VCOM Sub Section",
+            # ── Power Control Section ─────────────────────────────────────────
+            "Power Control — Overview",
+            "Power Control — Operating Data Sub Section",
+            "Power Control — Active Power Sub Section",
+            "Power Control — Active Power: Basic Settings / Operation Mode (Setpoint)",
+            "Power Control — Active Power: Basic Settings => Control Tuning",
+            "Power Control — Active Power: Basic Settings => System Behavior",
+            "Power Control — Active Power: Basic Settings => Behavior in Event of Error",
+            # ── Operation Mode ────────────────────────────────────────────────
+            "Operation Mode 1 — Defined Setpoint (Gear Icon)",
+            # ── Devices Section ───────────────────────────────────────────────
+            "Devices — Inverters Sub Section (Installed Devices)",
+            "Devices — Sensors Sub Section (Analogue and/or Bus Sensors)",
+            "Devices — Meters Sub Section (Virtual and/or Installed Devices)",
+            "Devices — Status DI Section (Manage Statuses)",
+            # ── System Section ────────────────────────────────────────────────
+            "System — Date/Time Sub Section",
+            "System — User Sub Section",
+            "System — License Sub Section",
+        ],
+        "per_unit": [],
+    },
 }
 
 
