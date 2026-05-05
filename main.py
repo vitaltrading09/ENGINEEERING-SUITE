@@ -18,9 +18,32 @@ _VENV_PY = (
     if sys.platform == "win32" else
     _HERE / ".venv" / "bin" / "python"            # Linux / macOS
 )
-if _VENV_PY.exists() and Path(sys.executable).resolve() != _VENV_PY.resolve():
+
+if not _VENV_PY.exists():
+    # .venv not created yet — show a clear message instead of a cryptic crash
+    try:
+        import tkinter as tk
+        from tkinter import messagebox
+        _root = tk.Tk()
+        _root.withdraw()
+        messagebox.showerror(
+            "Setup Required — Engineering Suite",
+            "The virtual environment (.venv) was not found.\n\n"
+            "Please run  setup.bat  first to install all dependencies,\n"
+            "then open main.py again.\n\n"
+            f"Expected location:\n{_VENV_PY}"
+        )
+        _root.destroy()
+    except Exception:
+        pass
+    sys.exit(1)
+
+if Path(sys.executable).resolve() != _VENV_PY.resolve():
+    # Not running from the venv — re-launch with the correct interpreter
     import subprocess
-    sys.exit(subprocess.call([str(_VENV_PY), str(Path(__file__).resolve())] + sys.argv[1:]))
+    sys.exit(subprocess.call(
+        [str(_VENV_PY), str(Path(__file__).resolve())] + sys.argv[1:]
+    ))
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Ensure the project root is on sys.path so all imports resolve
