@@ -2,14 +2,29 @@
 main.py
 -------
 Entry point for the Engineering Calculator Suite.
-Run with:  python main.py
+Run with:  python main.py   (or double-click — auto-boots into .venv)
 """
 
 import sys
 import os
+from pathlib import Path
+
+# ── Auto-bootstrap ────────────────────────────────────────────────────────────
+# If this file is launched with the system Python (e.g. double-click in Explorer
+# or from an IDE that isn't pointed at the venv), re-exec immediately using the
+# project's own .venv so all dependencies are available.
+_HERE = Path(__file__).resolve().parent
+_VENV_PY = (
+    _HERE / ".venv" / "Scripts" / "python.exe"   # Windows
+    if sys.platform == "win32" else
+    _HERE / ".venv" / "bin" / "python"            # Linux / macOS
+)
+if _VENV_PY.exists() and Path(sys.executable).resolve() != _VENV_PY.resolve():
+    os.execv(str(_VENV_PY), [str(_VENV_PY)] + sys.argv)
+# ─────────────────────────────────────────────────────────────────────────────
 
 # Ensure the project root is on sys.path so all imports resolve
-sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, str(_HERE))
 
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QFont, QIcon
