@@ -169,7 +169,7 @@ tr:hover td{background:#eef4ff}
 </div>
 
 <div style="margin-top:12px;font-size:10.5px;color:#777;line-height:1.7;border-top:1px solid #dde3ec;padding-top:10px">
-  <strong>Notes:</strong> All electrical tests per SANS 780 and Transformco Work Procedures (WP 24, WP 31–38, WP 52). Any failure must be reported immediately to the Designer, Internal Sales Manager or Winding Foreman. Safety prerequisites (LOTO, earthing, PPE, residual charge discharge) must be confirmed before any test equipment is connected. MV Switchgear Test Certificate provided by switchgear supplier and kept on file by Quality Representative / Technical Director.
+  <strong>Notes:</strong> Transformer testing aligns with the 8 routine tests required by SANS 780 (winding resistance, voltage ratio &amp; polarity/vector group, impedance voltage &amp; load loss, no-load loss &amp; current, induced overvoltage withstand, separate source withstand, paint thickness, effectiveness of sealing). IR (Megger) tests are Transformco WP 31 pre-tests and not a SANS 780 routine test, but are mandatory prior to HV withstand testing. Any failure must be reported immediately to the Designer, Internal Sales Manager or Winding Foreman. Safety prerequisites (LOTO, earthing, PPE, residual charge discharge) must be confirmed before any test equipment is connected. MV Switchgear Test Certificate is provided by the switchgear supplier and kept on file by Quality Representative / Technical Director.
 </div>
 
 </div>
@@ -198,14 +198,6 @@ const INFO = {
     warn:"IR = 0 MΩ indicates complete breakdown or short to earth. IR < 100 MΩ indicates insulation is wet or leakage is present. If coils or core are wet, place in baking oven at 100°C for 12 to 18 hours and re-test. A reading just above the minimum should be investigated before energising.",
     pass:"All readings at or above minimum specified IR values, corrected to 40°C.",
     fail:"Any reading below the minimum value. A zero reading indicates complete breakdown — do not energise until cause is found."
-  },
-  ir52:{
-    title:"IR Temperature Correction to 40°C — WP 52",
-    ref:"SANS 780 / WP 52",
-    purpose:"When winding temperature differs from 40°C, the measured IR value must be corrected to 40°C for comparison against standard minimum values.",
-    steps:["Record winding temperature at time of test (t°C).","Obtain temperature coefficient Kt from SANS 780 table for temperature t.","Apply formula: Rc = Kt x Rt, where Rc = corrected IR at 40°C, Rt = measured IR at t°C.","Calculate minimum required IR: Rm = (1 + k) MOhm, where k = rated voltage in volts divided by 1000.","Example: 11 kV transformer — k = 11000/1000 = 11, Rm = (1 + 11) = 12 MOhm minimum.","Compare corrected reading Rc against Rm."],
-    pass:"Rc (corrected to 40°C) is equal to or greater than Rm.",
-    fail:"Rc is less than Rm — investigate insulation condition before energising."
   },
   ratio:{
     title:"Turns Ratio Test — WP 32",
@@ -286,6 +278,23 @@ const INFO = {
     pass:"All operations smooth, no sticking, all position indicators correct, all interlocks prevent unsafe operation, motorised drives operate within voltage band.",
     fail:"Any sticking, mis-indication, interlock failure, or motorised drive failing to operate within the voltage band."
   },
+  paint:{
+    title:"Paint Thickness Measurement",
+    ref:"SANS 780 routine test",
+    purpose:"SANS 780 requires the paint thickness to be measured on every transformer prior to dispatch. Adequate paint thickness ensures long-term corrosion protection, particularly for outdoor installations such as mini sub-stations.",
+    steps:["Use a calibrated dry film thickness (DFT) gauge.","Measure thickness at multiple points across the tank surface — typically top, sides, base, radiators and conservator.","Record minimum, maximum and average readings.","Compare against Transformco paint specification (typically 80-120 µm DFT for inland environments, higher for coastal)."],
+    pass:"All readings meet or exceed the minimum DFT specified for the environmental classification (Inland / Coastal / Severe).",
+    fail:"Any reading below specified minimum DFT — paint to be re-applied and re-measured."
+  },
+  sealing:{
+    title:"Effectiveness of Sealing — Oil Tightness / Tank Pressure Test",
+    ref:"SANS 780 routine test",
+    purpose:"SANS 780 requires every transformer to be tested for effectiveness of sealing prior to dispatch. The test confirms there are no oil leaks from the tank, conservator, radiators, gaskets, bushings, valves or any welded joint.",
+    steps:["After all electrical routine tests are complete, leave the transformer pressurised at the conservator under normal oil head.","For sealed-tank units: apply a positive pressure to the tank per Transformco procedure (typ. 35-50 kPa above atmospheric).","Hold pressure for the specified duration (minimum 12-24 hours, or per Transformco procedure).","Visually inspect the tank, radiators, conservator, all gaskets, bushings, valves, drain plugs and Buchholz relay connections for any sign of oil weeping or pressure drop.","Use leak detection spray on suspect areas if needed.","Record start and end pressure readings."],
+    warn:"For ONAN units with conservator: the conservator must be at correct oil level before the seal test. For sealed-tank units: do not exceed the manufacturer's maximum test pressure as this can damage the tank.",
+    pass:"No oil leakage observed, no pressure drop beyond the allowable tolerance over the test period.",
+    fail:"Any oil weeping, dripping or measurable pressure drop indicates a leak — locate, repair and re-test."
+  },
   buchholz:{
     title:"Transformer Protection Devices — Buchholz, OTI, Pressure Relief",
     ref:"SANS 780 / Spec",
@@ -317,6 +326,7 @@ const SECTIONS=[
     {item:"Pressure relief device fitted",ref:"SANS 780"},
     {item:"Rating plate data confirmed correct — all fields match PO",ref:"SANS 780"},
     {item:"Terminal labels correct: HV = A, B, C and LV = a, b, c, n",ref:"SANS 780"},
+    {item:"Paint thickness — dry film thickness (DFT) measured per Transformco spec (typ. 80-120 µm)",ref:"SANS 780 routine test",info:"paint"},
     {item:"Tank earthing boss present and bonded",ref:"Visual"},
     {item:"Transport locking bolts removed before testing",ref:"Commissioning"},
   ]},
@@ -339,11 +349,10 @@ const SECTIONS=[
     {item:"IP rating of combined assembly maintained at all interconnections",ref:"IEC 62271-200"},
   ]},
   {title:"5. Electrical Tests — Transformer",sub:true,rows:[
-    {item:"WP 31 — IR Test: HV Coils to Earth  (record: ___ MOhm @ ___°C)",ref:"WP 31 / SANS 780",info:"ir"},
-    {item:"WP 31 — IR Test: LV Coils to Earth  (record: ___ MOhm @ ___°C)",ref:"WP 31 / SANS 780",info:"ir"},
-    {item:"WP 31 — IR Test: HV Coils to LV Coils  (record: ___ MOhm)",ref:"WP 31 / SANS 780",info:"ir"},
-    {item:"WP 31 — IR Test: Core Clamps to Earth  (record: ___ MOhm)",ref:"WP 31 / SANS 780",info:"ir"},
-    {item:"WP 52 — IR corrected to 40°C: confirmed meets minimum Rm",ref:"WP 52 / SANS 780",info:"ir52"},
+    {item:"WP 31 — IR Test: HV Coils to Earth  (record: ___ MOhm @ ___°C)",ref:"WP 31 (pre-test)",info:"ir"},
+    {item:"WP 31 — IR Test: LV Coils to Earth  (record: ___ MOhm @ ___°C)",ref:"WP 31 (pre-test)",info:"ir"},
+    {item:"WP 31 — IR Test: HV Coils to LV Coils  (record: ___ MOhm)",ref:"WP 31 (pre-test)",info:"ir"},
+    {item:"WP 31 — IR Test: Core Clamps to Earth  (record: ___ MOhm)",ref:"WP 31 (pre-test)",info:"ir"},
     {item:"WP 32 — Turns Ratio: all 3 phases, all tap positions — within ±0.5%",ref:"WP 32 / SANS 780",info:"ratio"},
     {item:"WP 34 — Vector Group confirmed matches Design Vector Diagram",ref:"WP 34 / SANS 780",info:"vg"},
     {item:"WP 35 — Winding Resistance: all HV phases  (record: A=___ B=___ C=___ Ohm)",ref:"WP 35 / SANS 780",info:"wr"},
@@ -355,6 +364,7 @@ const SECTIONS=[
     {item:"WP 36 — Induced Overvoltage Withstand: no collapse of voltage during test period",ref:"WP 36 / SANS 780",info:"induced"},
     {item:"WP 37 — Separate Source Withstand (Pressure Test): HV winding — no breakdown",ref:"WP 37 / SANS 780",info:"pressure"},
     {item:"WP 37 — Separate Source Withstand (Pressure Test): LV winding — no breakdown",ref:"WP 37 / SANS 780",info:"pressure"},
+    {item:"Effectiveness of sealing — oil tightness / tank pressure test (no leaks)",ref:"SANS 780 routine test",info:"sealing"},
   ]},
   {title:"6. Electrical Tests — RMU",sub:true,rows:[
     {item:"WP 24/31 — IR Test: Phase A to Earth (LBS open)  (record: ___ MOhm)",ref:"WP 24 / SANS 780",info:"irRmu"},
