@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>FAT Checklist — MV RMU &amp; Transformer (Mini Substation)</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -116,14 +116,14 @@ tr:hover td{background:#eef4ff}
 /* In-browser camera modal */
 .cam-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#000;z-index:2500;align-items:stretch;justify-content:center}
 .cam-overlay.open{display:flex}
-.cam-wrap{background:#000;width:100%;max-width:640px;display:flex;flex-direction:column;height:100vh}
+.cam-wrap{background:#000;width:100%;max-width:640px;display:flex;flex-direction:column;height:100vh;height:100dvh}
 #cam-video{width:100%;flex:1;display:block;object-fit:contain;background:#000;min-height:0}
 .cam-flash{position:absolute;top:0;left:0;right:0;bottom:0;background:#fff;opacity:0;pointer-events:none;transition:opacity 0.12s;z-index:2}
 .cam-thumbs-bar{display:flex;gap:5px;padding:8px 10px;background:#111;flex-wrap:wrap;min-height:62px;align-items:center}
 .cam-thumbs-bar .cam-thumb{height:50px;width:50px;object-fit:cover;border-radius:4px;border:2px solid #555;cursor:pointer;flex-shrink:0}
 .cam-thumbs-bar .cam-thumb:hover{border-color:#fff}
 .cam-thumbs-empty{color:#555;font-size:11px;font-style:italic}
-.cam-controls{padding:12px 16px;background:#0a0a0a;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cam-controls{padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom, 0px));background:#0a0a0a;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .cam-cancel-btn{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:9px 14px;font-size:12px;cursor:pointer;font-family:inherit}
 .cam-cancel-btn:hover{background:rgba(255,255,255,0.2)}
 .cam-done-btn{background:#2e7d10;color:#fff;border:none;border-radius:6px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
