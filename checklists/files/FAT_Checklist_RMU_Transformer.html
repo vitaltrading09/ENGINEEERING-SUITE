@@ -239,12 +239,15 @@ tr:hover td{background:#eef4ff}
     <button class="panel-close" onclick="closePhotoPanel()">&#x2715;</button>
     <div class="panel-title" id="ph-title">Photos</div>
     <div class="panel-ref" id="ph-ref"></div>
+    <!-- hidden inputs — triggered by buttons below -->
+    <input type="file" id="ph-input-capture" accept="image/*" capture="environment" multiple style="display:none">
+    <input type="file" id="ph-input-file"    accept="image/*" multiple style="display:none">
     <div class="photo-add-row">
-      <span style="font-size:18px">📷</span>
-      <input type="file" id="ph-input" accept="image/*" capture="environment" multiple>
-      <button class="save-all-btn" id="ph-save-all" onclick="saveAllPhotos()" title="Download every photo in this group / save to gallery">💾 Save All</button>
+      <button class="cam-btn" style="font-size:12px;padding:7px 14px" onclick="document.getElementById('ph-input-capture').click()">📷 Capture</button>
+      <button class="cam-btn" style="font-size:12px;padding:7px 14px;background:#445e80" onclick="document.getElementById('ph-input-file').click()">🖼️ Choose File</button>
+      <button class="save-all-btn" id="ph-save-all" onclick="saveAllPhotos()" title="Download every photo / save to gallery">💾 Save All</button>
     </div>
-    <div style="font-size:10.5px;color:#666;margin-bottom:8px;line-height:1.45">On a phone, tap <strong>💾 Save</strong> on any photo and choose <em>"Save Image"</em> / <em>"Save to Photos"</em> from the share sheet to send it to your gallery. On desktop the photo downloads to your Downloads folder.</div>
+    <div style="font-size:10.5px;color:#666;margin-bottom:8px;line-height:1.45"><strong>📷 Capture</strong> opens your camera directly. <strong>🖼️ Choose File</strong> lets you pick existing photos from your device. Tap <strong>💾 Save</strong> on any photo to save it to your gallery / device.</div>
     <div id="ph-grid-wrap"></div>
   </div>
 </div>
@@ -630,7 +633,7 @@ function updatePhotoBadge(){
   }
 }
 
-document.getElementById('ph-input').addEventListener('change', function(e){
+function handlePhotoInput(e){
   const files = Array.from(e.target.files || []);
   if(!files.length) return;
   let pending = files.length;
@@ -645,7 +648,9 @@ document.getElementById('ph-input').addEventListener('change', function(e){
     reader.readAsDataURL(f);
   });
   e.target.value = '';
-});
+}
+document.getElementById('ph-input-capture').addEventListener('change', handlePhotoInput);
+document.getElementById('ph-input-file').addEventListener('change', handlePhotoInput);
 
 document.getElementById('photo-overlay').addEventListener('click', function(e){if(e.target===this) closePhotoPanel();});
 
