@@ -82,6 +82,33 @@ tr:hover td{background:#eef4ff}
 .toolbar-left{font-size:12px;color:#556}
 .progress-bar{height:6px;background:#e0e8f0;border-radius:3px;margin-top:10px;overflow:hidden}
 .progress-fill{height:100%;background:#003366;border-radius:3px;transition:width 0.3s}
+/* === Camera / Photo features === */
+.photo-cell{text-align:center;width:62px;padding:4px 6px}
+.cam-btn{background:#003366;color:#fff;border:none;border-radius:4px;padding:4px 8px;font-size:11px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-family:inherit;line-height:1}
+.cam-btn:hover{background:#1a5599}
+.cam-badge{background:#d4a017;color:#fff;border-radius:9px;padding:1px 6px;font-size:10px;font-weight:700;min-width:14px;display:inline-block;text-align:center;line-height:1.3}
+.photo-add-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;padding:10px;background:#f0f5ff;border:1px dashed #003366;border-radius:6px}
+.photo-add-row input[type=file]{flex:1;font-size:12px;font-family:inherit}
+.photo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:8px}
+.photo-tile{background:#f6f8fb;border:1px solid #dde3ec;border-radius:6px;padding:6px;position:relative}
+.photo-tile img{width:100%;height:130px;object-fit:cover;border-radius:4px;display:block;cursor:zoom-in}
+.photo-tile .cap-input{width:100%;border:1px solid #ccd5e0;border-radius:3px;padding:3px 5px;font-size:11px;font-family:inherit;margin-top:4px}
+.photo-tile .cap-input:focus{outline:none;border-color:#003366;background:#f0f5ff}
+.photo-tile .del-btn{position:absolute;top:6px;right:6px;background:rgba(255,255,255,0.95);border:1px solid #b71c1c;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:13px;color:#b71c1c;line-height:1;font-weight:700;padding:0;display:flex;align-items:center;justify-content:center}
+.photo-tile .del-btn:hover{background:#b71c1c;color:#fff}
+.photo-tile .save-btn{position:absolute;top:6px;left:6px;background:rgba(255,255,255,0.95);border:1px solid #2e7d10;border-radius:4px;padding:2px 7px;cursor:pointer;font-size:11px;color:#2e7d10;font-weight:700;line-height:1;font-family:inherit}
+.photo-tile .save-btn:hover{background:#2e7d10;color:#fff}
+.save-all-btn{background:#2e7d10;color:#fff;border:none;border-radius:4px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;margin-left:8px}
+.save-all-btn:hover{background:#3e9a18}
+.save-all-btn:disabled{background:#aaa;cursor:not-allowed}
+.photo-empty{font-size:12px;color:#888;font-style:italic;padding:10px;text-align:center}
+.general-photos{background:#fff;border:1px solid #dde3ec;border-radius:8px;padding:14px 18px;margin-top:14px}
+.general-photos h3{font-size:13px;font-weight:700;color:#003366;margin-bottom:6px;padding-bottom:7px;border-bottom:2px solid #003366}
+.general-photos .gp-desc{font-size:11px;color:#666;margin-bottom:10px;line-height:1.5}
+
+/* Photo appendix (print only) */
+.photo-appendix{display:none}
+
 @media print{
   body{background:#fff;font-size:10px}
   .header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -92,6 +119,19 @@ tr:hover td{background:#eef4ff}
   .overlay{display:none!important}
   table{page-break-inside:auto}
   tr{page-break-inside:avoid}
+  .cam-btn,.photo-cell{display:none!important}
+  thead th.photo-th{display:none!important}
+  .general-photos{display:none!important}
+  .photo-appendix{display:block;page-break-before:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .photo-appendix h2{font-size:15px;color:#fff;background:#003366;padding:8px 12px;border-radius:6px;margin-bottom:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pa-section{font-size:12.5px;font-weight:700;color:#003366;background:#D6E4F0;padding:5px 10px;border-radius:4px;margin:12px 0 8px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .pa-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+  .pa-tile{border:1px solid #888;border-radius:4px;padding:6px;page-break-inside:avoid;background:#fff}
+  .pa-tile img{width:100%;max-height:7.5cm;object-fit:contain;display:block;border:1px solid #ddd}
+  .pa-cap{font-size:9.5px;margin-top:4px;color:#1a1a1a;line-height:1.45}
+  .pa-cap .pa-label{color:#003366;font-weight:700;display:block;margin-bottom:1px}
+  .pa-cap .pa-ref{color:#666;font-size:9px}
+  .pa-empty{font-size:11px;color:#666;font-style:italic}
 }
 </style>
 </head>
@@ -141,6 +181,12 @@ tr:hover td{background:#eef4ff}
   <div class="sum-card"><div class="sum-num" id="cnt-open" style="color:#c77b00">0</div><div class="sum-lbl">Outstanding</div></div>
 </div>
 
+<div class="general-photos">
+  <h3>General FAT Photos</h3>
+  <div class="gp-desc">Add general photos of the FAT — overall views, equipment shots, certificates, nameplate close-ups, or anything not tied to a specific check item. All photos appear in the Photo Appendix when you Print / Save as PDF. <strong>Note:</strong> photos are held in this session only — print before closing the page.</div>
+  <button class="cam-btn" onclick="openPhotoPanel({type:'general', label:'General FAT Photos', ref:'FAT general inspection'})">📷 Add / View General Photos (<span id="gen-photo-count">0</span>)</button>
+</div>
+
 <div class="signoff">
   <div class="signoff-title">FAT Result &amp; Sign-Off</div>
   <div class="result-options">
@@ -172,6 +218,9 @@ tr:hover td{background:#eef4ff}
   <strong>Notes:</strong> Transformer testing aligns with the 8 routine tests required by SANS 780 (winding resistance, voltage ratio &amp; polarity/vector group, impedance voltage &amp; load loss, no-load loss &amp; current, induced overvoltage withstand, separate source withstand, paint thickness, effectiveness of sealing). IR (Megger) tests are Transformco WP 31 pre-tests and not a SANS 780 routine test, but are mandatory prior to HV withstand testing. Any failure must be reported immediately to the Designer, Internal Sales Manager or Winding Foreman. Safety prerequisites (LOTO, earthing, PPE, residual charge discharge) must be confirmed before any test equipment is connected. MV Switchgear Test Certificate is provided by the switchgear supplier and kept on file by Quality Representative / Technical Director.
 </div>
 
+<!-- PHOTO APPENDIX (only renders on print) -->
+<div class="photo-appendix" id="photo-appendix"></div>
+
 </div>
 
 <!-- INFO PANEL OVERLAY -->
@@ -181,6 +230,22 @@ tr:hover td{background:#eef4ff}
     <div class="panel-title" id="p-title"></div>
     <div class="panel-ref" id="p-ref"></div>
     <div id="p-body"></div>
+  </div>
+</div>
+
+<!-- PHOTO PANEL OVERLAY -->
+<div class="overlay" id="photo-overlay">
+  <div class="panel" id="photo-panel">
+    <button class="panel-close" onclick="closePhotoPanel()">&#x2715;</button>
+    <div class="panel-title" id="ph-title">Photos</div>
+    <div class="panel-ref" id="ph-ref"></div>
+    <div class="photo-add-row">
+      <span style="font-size:18px">📷</span>
+      <input type="file" id="ph-input" accept="image/*" capture="environment" multiple>
+      <button class="save-all-btn" id="ph-save-all" onclick="saveAllPhotos()" title="Download every photo in this group / save to gallery">💾 Save All</button>
+    </div>
+    <div style="font-size:10.5px;color:#666;margin-bottom:8px;line-height:1.45">On a phone, tap <strong>💾 Save</strong> on any photo and choose <em>"Save Image"</em> / <em>"Save to Photos"</em> from the share sheet to send it to your gallery. On desktop the photo downloads to your Downloads folder.</div>
+    <div id="ph-grid-wrap"></div>
   </div>
 </div>
 
@@ -415,14 +480,15 @@ function buildChecklist(){
     body.appendChild(st);
     const tbl=document.createElement('table');
     tbl.innerHTML=`<thead><tr>
-      <th style="width:36%">Test / Check Item</th>
-      <th style="width:13%">Reference</th>
-      <th class="center" style="width:48px">Pass</th>
-      <th class="center" style="width:48px">Fail</th>
-      <th class="center" style="width:40px">N/A</th>
-      <th class="center" style="width:58px">Snag<br>Attended</th>
-      <th class="center" style="width:58px">Not<br>Attended</th>
+      <th style="width:34%">Test / Check Item</th>
+      <th style="width:12%">Reference</th>
+      <th class="center" style="width:46px">Pass</th>
+      <th class="center" style="width:46px">Fail</th>
+      <th class="center" style="width:38px">N/A</th>
+      <th class="center" style="width:56px">Snag<br>Attended</th>
+      <th class="center" style="width:56px">Not<br>Attended</th>
       <th>Remarks / Measured Value</th>
+      <th class="center photo-th" style="width:62px">Photos</th>
     </tr></thead>`;
     const tbody=document.createElement('tbody');
     sec.rows.forEach(r=>{
@@ -437,7 +503,8 @@ function buildChecklist(){
         <td class="check-cell"><input type="checkbox" data-id="${id}" data-type="na" onchange="handleCheck(this)"></td>
         <td class="check-cell"><input type="checkbox"></td>
         <td class="check-cell"><input type="checkbox"></td>
-        <td class="remarks-cell"><input type="text" placeholder=""></td>`;
+        <td class="remarks-cell"><input type="text" placeholder=""></td>
+        <td class="photo-cell"><button class="cam-btn" data-row="${id}" data-section="${escapeAttr(sec.title)}" data-label="${escapeAttr(r.item)}" data-ref="${escapeAttr(r.ref)}" onclick="openPhotoPanel({type:'row', id:this.dataset.row, section:this.dataset.section, label:this.dataset.label, ref:this.dataset.ref})">📷 <span class="cam-badge" id="badge-${id}">0</span></button></td>`;
       tbody.appendChild(tr);
     });
     tbl.appendChild(tbody);
@@ -493,7 +560,235 @@ function openPanel(key){
 }
 function closePanel(){document.getElementById('overlay').classList.remove('open');}
 document.getElementById('overlay').addEventListener('click',function(e){if(e.target===this)closePanel();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closePanel();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePanel();closePhotoPanel();}});
+
+/* ====================== CAMERA / PHOTO HANDLING ====================== */
+function escapeAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function escapeHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+const photos = {rows:{}, general:[]};
+let photoTarget = null;
+
+function openPhotoPanel(target){
+  photoTarget = target;
+  const title = target.type === 'general' ? 'General FAT Photos' : ('Photos: ' + target.label);
+  document.getElementById('ph-title').textContent = title;
+  document.getElementById('ph-ref').textContent = target.type === 'general' ? 'FAT general inspection / certificates / overall views' : (target.section + ' — ' + target.ref);
+  renderPhotoGrid();
+  document.getElementById('photo-overlay').classList.add('open');
+}
+function closePhotoPanel(){document.getElementById('photo-overlay').classList.remove('open');}
+
+function getPhotoArr(){
+  if(!photoTarget) return [];
+  if(photoTarget.type === 'general') return photos.general;
+  if(!photos.rows[photoTarget.id]) photos.rows[photoTarget.id] = [];
+  return photos.rows[photoTarget.id];
+}
+
+function renderPhotoGrid(){
+  const wrap = document.getElementById('ph-grid-wrap');
+  const arr = getPhotoArr();
+  if(arr.length === 0){
+    wrap.innerHTML = '<div class="photo-empty">No photos yet. Tap the file picker above to take a photo (phone) or select an image.</div>';
+  } else {
+    let html = '<div class="photo-grid">';
+    arr.forEach((p, i) => {
+      html += '<div class="photo-tile">' +
+        '<button class="save-btn" onclick="savePhoto(' + i + ')" title="Save to device / gallery">💾 Save</button>' +
+        '<button class="del-btn" onclick="deletePhoto(' + i + ')" title="Remove photo">&times;</button>' +
+        '<img src="' + p.dataUrl + '" alt="photo" onclick="window.open(this.src,\'_blank\')">' +
+        '<input class="cap-input" type="text" value="' + escapeAttr(p.caption || '') + '" placeholder="Caption / description (optional)" data-idx="' + i + '" oninput="updateCaption(this)">' +
+      '</div>';
+    });
+    html += '</div>';
+    wrap.innerHTML = html;
+  }
+  updatePhotoBadge();
+}
+
+function updateCaption(inp){
+  const idx = parseInt(inp.dataset.idx);
+  const arr = getPhotoArr();
+  if(arr[idx]) arr[idx].caption = inp.value;
+}
+
+function deletePhoto(i){
+  if(!confirm('Remove this photo?')) return;
+  getPhotoArr().splice(i, 1);
+  renderPhotoGrid();
+}
+
+function updatePhotoBadge(){
+  if(!photoTarget) return;
+  if(photoTarget.type === 'general'){
+    const el = document.getElementById('gen-photo-count');
+    if(el) el.textContent = photos.general.length;
+  } else {
+    const el = document.getElementById('badge-' + photoTarget.id);
+    if(el) el.textContent = (photos.rows[photoTarget.id] || []).length;
+  }
+}
+
+document.getElementById('ph-input').addEventListener('change', function(e){
+  const files = Array.from(e.target.files || []);
+  if(!files.length) return;
+  let pending = files.length;
+  files.forEach(f => {
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      getPhotoArr().push({name: f.name, dataUrl: ev.target.result, caption: ''});
+      pending--;
+      if(pending === 0) renderPhotoGrid();
+    };
+    reader.onerror = function(){pending--; if(pending === 0) renderPhotoGrid();};
+    reader.readAsDataURL(f);
+  });
+  e.target.value = '';
+});
+
+document.getElementById('photo-overlay').addEventListener('click', function(e){if(e.target===this) closePhotoPanel();});
+
+/* Save to device / gallery */
+function dataUrlToFile(dataUrl, filename){
+  const arr = dataUrl.split(',');
+  const mime = (arr[0].match(/:(.*?);/) || [,'image/jpeg'])[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8 = new Uint8Array(n);
+  while(n--) u8[n] = bstr.charCodeAt(n);
+  return new File([u8], filename, {type: mime});
+}
+
+function sanitiseName(s){return String(s).replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'').slice(0,40);}
+
+function makeFilename(p, idx){
+  const ext = (p.dataUrl.match(/^data:image\/(\w+)/) || [,'jpg'])[1].replace('jpeg','jpg');
+  let base;
+  if(photoTarget.type === 'general'){
+    base = 'FAT_General_' + String(idx+1).padStart(2,'0');
+  } else {
+    const lbl = sanitiseName(photoTarget.label);
+    base = 'FAT_R' + photoTarget.id + '_' + lbl + '_' + String(idx+1).padStart(2,'0');
+  }
+  if(p.caption){
+    const cap = sanitiseName(p.caption);
+    if(cap) base += '_' + cap.slice(0,20);
+  }
+  return base + '.' + ext;
+}
+
+async function savePhoto(idx){
+  const arr = getPhotoArr();
+  const p = arr[idx]; if(!p) return;
+  const fname = makeFilename(p, idx);
+  // Try Web Share API (iOS / Android) — gives "Save Image / Save to Photos" option
+  try {
+    const file = dataUrlToFile(p.dataUrl, fname);
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file], title: fname});
+      return;
+    }
+  } catch(e){
+    if(e && e.name === 'AbortError') return; // user cancelled share sheet
+    // otherwise fall through to download fallback
+  }
+  // Fallback: classic download link
+  const a = document.createElement('a');
+  a.href = p.dataUrl;
+  a.download = fname;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>document.body.removeChild(a), 100);
+}
+
+async function saveAllPhotos(){
+  const arr = getPhotoArr();
+  if(!arr.length){ alert('No photos to save yet.'); return; }
+  const btn = document.getElementById('ph-save-all');
+  btn.disabled = true;
+  const origText = btn.textContent;
+  // If Web Share supports multiple files in one share, use it
+  try {
+    const files = arr.map((p,i) => dataUrlToFile(p.dataUrl, makeFilename(p,i)));
+    if(navigator.canShare && navigator.canShare({files})){
+      await navigator.share({files, title: 'FAT Photos'});
+      btn.disabled = false; btn.textContent = origText;
+      return;
+    }
+  } catch(e){
+    if(e && e.name === 'AbortError'){ btn.disabled = false; btn.textContent = origText; return; }
+  }
+  // Fallback: trigger one download per photo (browser will queue)
+  for(let i=0; i<arr.length; i++){
+    btn.textContent = 'Saving ' + (i+1) + '/' + arr.length + '...';
+    const a = document.createElement('a');
+    a.href = arr[i].dataUrl;
+    a.download = makeFilename(arr[i], i);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    await new Promise(r => setTimeout(r, 250));
+  }
+  btn.disabled = false; btn.textContent = origText;
+}
+
+/* Build the print-only photo appendix */
+function buildPhotoAppendix(){
+  const ap = document.getElementById('photo-appendix');
+  const sectionPhotos = {};
+  let rowIdx = 0;
+  SECTIONS.forEach(sec => {
+    sec.rows.forEach(r => {
+      const arr = photos.rows[rowIdx];
+      if(arr && arr.length){
+        if(!sectionPhotos[sec.title]) sectionPhotos[sec.title] = [];
+        arr.forEach(p => sectionPhotos[sec.title].push({label: r.item, ref: r.ref, photo: p}));
+      }
+      rowIdx++;
+    });
+  });
+
+  const totalRowPhotos = Object.values(sectionPhotos).reduce((a,b)=>a+b.length,0);
+  if(totalRowPhotos === 0 && photos.general.length === 0){
+    ap.innerHTML = '';
+    return;
+  }
+
+  let html = '<h2>Photo Appendix</h2>';
+  Object.keys(sectionPhotos).forEach(secTitle => {
+    html += '<div class="pa-section">' + escapeHtml(secTitle) + '</div>';
+    html += '<div class="pa-grid">';
+    sectionPhotos[secTitle].forEach(entry => {
+      html += '<div class="pa-tile">' +
+        '<img src="' + entry.photo.dataUrl + '">' +
+        '<div class="pa-cap">' +
+          '<span class="pa-label">' + escapeHtml(entry.label) + '</span>' +
+          (entry.photo.caption ? escapeHtml(entry.photo.caption) + '<br>' : '') +
+          '<span class="pa-ref">Ref: ' + escapeHtml(entry.ref) + '</span>' +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+  });
+
+  if(photos.general.length){
+    html += '<div class="pa-section">General FAT Photos</div>';
+    html += '<div class="pa-grid">';
+    photos.general.forEach((p, i) => {
+      html += '<div class="pa-tile">' +
+        '<img src="' + p.dataUrl + '">' +
+        '<div class="pa-cap">' +
+          '<span class="pa-label">General Photo ' + (i+1) + '</span>' +
+          (p.caption ? escapeHtml(p.caption) : '<span class="pa-ref">(no caption)</span>') +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+  }
+  ap.innerHTML = html;
+}
+window.addEventListener('beforeprint', buildPhotoAppendix);
 
 buildChecklist();
 updateCounts();
