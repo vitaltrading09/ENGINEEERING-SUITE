@@ -109,6 +109,30 @@ tr:hover td{background:#eef4ff}
 /* Photo appendix (print only) */
 .photo-appendix{display:none}
 
+/* === Live gallery & persistence UI === */
+.live-gallery{background:#fff;border:1px solid #dde3ec;border-radius:8px;padding:14px 18px;margin-top:14px}
+.live-gallery h3{font-size:13px;font-weight:700;color:#003366;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid #003366;display:flex;justify-content:space-between;align-items:center}
+.lg-section-hdr{font-size:11px;font-weight:700;color:#003366;background:#D6E4F0;padding:4px 9px;border-radius:4px;margin:8px 0 5px}
+.lg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:8px}
+.lg-tile{border:1px solid #dde3ec;border-radius:5px;overflow:hidden;cursor:zoom-in;background:#f8fafc}
+.lg-tile img{width:100%;height:88px;object-fit:cover;display:block}
+.lg-tile .lg-meta{padding:3px 5px;font-size:9px;line-height:1.35;background:#f0f5ff}
+.lg-tile .lg-lbl{color:#003366;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.lg-tile .lg-cap{color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;font-style:italic}
+.lg-empty{font-size:12px;color:#aaa;font-style:italic;text-align:center;padding:18px}
+.autosave-msg{font-size:11px;color:#2e7d10;display:inline-flex;align-items:center;gap:5px;opacity:0;transition:opacity 0.6s;margin-right:10px}
+.autosave-msg.show{opacity:1}
+.confirm-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center}
+.confirm-overlay.open{display:flex}
+.confirm-box{background:#fff;border-radius:10px;max-width:440px;width:92%;padding:28px 24px;text-align:center;box-shadow:0 8px 32px rgba(0,0,40,0.22)}
+.confirm-box h2{font-size:16px;font-weight:700;color:#b71c1c;margin-bottom:8px}
+.confirm-box p{font-size:13px;color:#333;line-height:1.6;margin-bottom:20px}
+.confirm-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-danger{background:#b71c1c;color:#fff;border:none;padding:9px 20px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer}
+.btn-danger:hover{background:#8b1414}
+.btn-safe{background:#f0f5ff;color:#003366;border:2px solid #003366;padding:9px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+.btn-safe:hover{background:#dce8f8}
+
 @media print{
   body{background:#fff;font-size:10px}
   .header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -122,6 +146,7 @@ tr:hover td{background:#eef4ff}
   .cam-btn,.photo-cell{display:none!important}
   thead th.photo-th{display:none!important}
   .general-photos{display:none!important}
+  .live-gallery{display:none!important}
   .photo-appendix{display:block;page-break-before:always;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .photo-appendix h2{font-size:15px;color:#fff;background:#003366;padding:8px 12px;border-radius:6px;margin-bottom:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .pa-section{font-size:12.5px;font-weight:700;color:#003366;background:#D6E4F0;padding:5px 10px;border-radius:4px;margin:12px 0 8px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -151,24 +176,29 @@ tr:hover td{background:#eef4ff}
 </div>
 
 <div class="meta-grid">
-  <div class="meta-field"><div class="meta-label">Project / Site Name</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
-  <div class="meta-field"><div class="meta-label">Contract / Order No.</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
-  <div class="meta-field"><div class="meta-label">FAT Date</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
-  <div class="meta-field"><div class="meta-label">Transformer Serial No.</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
-  <div class="meta-field"><div class="meta-label">RMU Serial No.</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
-  <div class="meta-field"><div class="meta-label">kVA / HV kV / LV V</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
-  <div class="meta-field"><div class="meta-label">Vector Group</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
-  <div class="meta-field"><div class="meta-label">Impedance Uk%</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
-  <div class="meta-field"><div class="meta-label">Manufacturer</div><div class="meta-val" contenteditable="true">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Project / Site Name</div><div class="meta-val" contenteditable="true" data-mf="0" oninput="scheduleAutoSave()">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Contract / Order No.</div><div class="meta-val" contenteditable="true" data-mf="1" oninput="scheduleAutoSave()">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">FAT Date</div><div class="meta-val" contenteditable="true" data-mf="2" oninput="scheduleAutoSave()">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Transformer Serial No.</div><div class="meta-val" contenteditable="true" data-mf="3" oninput="scheduleAutoSave()">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">RMU Serial No.</div><div class="meta-val" contenteditable="true" data-mf="4" oninput="scheduleAutoSave()">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">kVA / HV kV / LV V</div><div class="meta-val" contenteditable="true" data-mf="5" oninput="scheduleAutoSave()">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Vector Group</div><div class="meta-val" contenteditable="true" data-mf="6" oninput="scheduleAutoSave()">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Impedance Uk%</div><div class="meta-val" contenteditable="true" data-mf="7" oninput="scheduleAutoSave()">&nbsp;</div></div>
+  <div class="meta-field"><div class="meta-label">Manufacturer</div><div class="meta-val" contenteditable="true" data-mf="8" oninput="scheduleAutoSave()">&nbsp;</div></div>
 </div>
 
 <div class="toolbar">
   <div class="toolbar-left">
     Completion: <strong id="pct">0%</strong>
-    <div class="progress-bar" style="width:240px;display:inline-block;vertical-align:middle;margin-left:8px"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    <div class="progress-bar" style="width:200px;display:inline-block;vertical-align:middle;margin-left:8px"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+    &nbsp;<span class="autosave-msg" id="autosave-msg">✓ Auto-saved</span>
   </div>
-  <div>
-    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+    <button class="print-btn" style="background:#2e7d10" onclick="saveReport()">💾 Save Report</button>
+    <button class="print-btn" style="background:#445e80" onclick="document.getElementById('load-report-input').click()">📂 Load Report</button>
+    <input type="file" id="load-report-input" accept=".json" style="display:none" onchange="loadReport(this)">
+    <button class="print-btn" onclick="window.print()">🖨️ Print / PDF</button>
+    <button class="export-btn" style="color:#b71c1c;border-color:#b71c1c" onclick="showClearConfirm()">✕ Clear All</button>
   </div>
 </div>
 
@@ -183,33 +213,33 @@ tr:hover td{background:#eef4ff}
 
 <div class="general-photos">
   <h3>General FAT Photos</h3>
-  <div class="gp-desc">Add general photos of the FAT — overall views, equipment shots, certificates, nameplate close-ups, or anything not tied to a specific check item. All photos appear in the Photo Appendix when you Print / Save as PDF. <strong>Note:</strong> photos are held in this session only — print before closing the page.</div>
+  <div class="gp-desc">Add general photos of the FAT — overall views, equipment shots, certificates, nameplate close-ups, or anything not tied to a specific check item. Photos appear in the live gallery below and in the Photo Appendix when printing. Use <strong>💾 Save Report</strong> to keep photos across sessions.</div>
   <button class="cam-btn" onclick="openPhotoPanel({type:'general', label:'General FAT Photos', ref:'FAT general inspection'})">📷 Add / View General Photos (<span id="gen-photo-count">0</span>)</button>
 </div>
 
 <div class="signoff">
   <div class="signoff-title">FAT Result &amp; Sign-Off</div>
   <div class="result-options">
-    <label class="result-opt"><input type="radio" name="result" value="pass"> PASS — Approved for shipment</label>
-    <label class="result-opt"><input type="radio" name="result" value="conditional"> PASS WITH CONDITIONS (items outstanding)</label>
-    <label class="result-opt"><input type="radio" name="result" value="fail"> FAIL — NOT approved for shipment</label>
+    <label class="result-opt"><input type="radio" name="result" value="pass" onchange="scheduleAutoSave()"> PASS — Approved for shipment</label>
+    <label class="result-opt"><input type="radio" name="result" value="conditional" onchange="scheduleAutoSave()"> PASS WITH CONDITIONS (items outstanding)</label>
+    <label class="result-opt"><input type="radio" name="result" value="fail" onchange="scheduleAutoSave()"> FAIL — NOT approved for shipment</label>
   </div>
   <div class="signoff-grid">
     <div class="signoff-col">
       <h4>Customer / Witness Representative</h4>
-      <div class="signoff-field"><label>Full Name</label><input type="text"></div>
-      <div class="signoff-field"><label>Designation</label><input type="text"></div>
-      <div class="signoff-field"><label>Company</label><input type="text"></div>
-      <div class="signoff-field"><label>Signature</label><input type="text" placeholder="Type name as signature"></div>
-      <div class="signoff-field"><label>Date</label><input type="date"></div>
+      <div class="signoff-field"><label>Full Name</label><input type="text" data-sf="c-name" oninput="scheduleAutoSave()"></div>
+      <div class="signoff-field"><label>Designation</label><input type="text" data-sf="c-desig" oninput="scheduleAutoSave()"></div>
+      <div class="signoff-field"><label>Company</label><input type="text" data-sf="c-co" oninput="scheduleAutoSave()"></div>
+      <div class="signoff-field"><label>Signature</label><input type="text" data-sf="c-sig" placeholder="Type name as signature" oninput="scheduleAutoSave()"></div>
+      <div class="signoff-field"><label>Date</label><input type="date" data-sf="c-date" onchange="scheduleAutoSave()"></div>
     </div>
     <div class="signoff-col">
       <h4>Manufacturer Representative (Transformco)</h4>
-      <div class="signoff-field"><label>Full Name</label><input type="text"></div>
-      <div class="signoff-field"><label>Designation</label><input type="text"></div>
-      <div class="signoff-field"><label>Company</label><input type="text"></div>
-      <div class="signoff-field"><label>Signature</label><input type="text" placeholder="Type name as signature"></div>
-      <div class="signoff-field"><label>Date</label><input type="date"></div>
+      <div class="signoff-field"><label>Full Name</label><input type="text" data-sf="m-name" oninput="scheduleAutoSave()"></div>
+      <div class="signoff-field"><label>Designation</label><input type="text" data-sf="m-desig" oninput="scheduleAutoSave()"></div>
+      <div class="signoff-field"><label>Company</label><input type="text" data-sf="m-co" oninput="scheduleAutoSave()"></div>
+      <div class="signoff-field"><label>Signature</label><input type="text" data-sf="m-sig" placeholder="Type name as signature" oninput="scheduleAutoSave()"></div>
+      <div class="signoff-field"><label>Date</label><input type="date" data-sf="m-date" onchange="scheduleAutoSave()"></div>
     </div>
   </div>
 </div>
@@ -218,9 +248,27 @@ tr:hover td{background:#eef4ff}
   <strong>Notes:</strong> Transformer testing aligns with the 8 routine tests required by SANS 780 (winding resistance, voltage ratio &amp; polarity/vector group, impedance voltage &amp; load loss, no-load loss &amp; current, induced overvoltage withstand, separate source withstand, paint thickness, effectiveness of sealing). IR (Megger) tests are Transformco WP 31 pre-tests and not a SANS 780 routine test, but are mandatory prior to HV withstand testing. Any failure must be reported immediately to the Designer, Internal Sales Manager or Winding Foreman. Safety prerequisites (LOTO, earthing, PPE, residual charge discharge) must be confirmed before any test equipment is connected. MV Switchgear Test Certificate is provided by the switchgear supplier and kept on file by Quality Representative / Technical Director.
 </div>
 
+<!-- LIVE PHOTO GALLERY (always visible on screen, hidden on print) -->
+<div class="live-gallery" id="live-gallery">
+  <h3>Photo Gallery <span id="lg-total" style="font-size:11px;font-weight:400;color:#666"></span></h3>
+  <div id="lg-body"><div class="lg-empty">No photos added yet — tap 📷 on any check item or use the General FAT Photos section above.</div></div>
+</div>
+
 <!-- PHOTO APPENDIX (only renders on print) -->
 <div class="photo-appendix" id="photo-appendix"></div>
 
+</div>
+
+<!-- CLEAR ALL CONFIRM OVERLAY -->
+<div class="confirm-overlay" id="clear-overlay">
+  <div class="confirm-box">
+    <h2>⚠️ Clear All Progress?</h2>
+    <p>This will permanently remove all checkboxes, remarks, photos and sign-off data from this page and from the auto-save.<br><br>This <strong>cannot be undone</strong>. Export a <em>Save Report</em> first if you want to keep a copy.</p>
+    <div class="confirm-btns">
+      <button class="btn-danger" onclick="confirmClearAll()">Yes, Clear Everything</button>
+      <button class="btn-safe" onclick="document.getElementById('clear-overlay').classList.remove('open')">Cancel</button>
+    </div>
+  </div>
 </div>
 
 <!-- INFO PANEL OVERLAY -->
@@ -504,9 +552,9 @@ function buildChecklist(){
         <td class="check-cell"><input type="checkbox" data-id="${id}" data-type="pass" onchange="handleCheck(this)"></td>
         <td class="check-cell"><input type="checkbox" data-id="${id}" data-type="fail" onchange="handleCheck(this)"></td>
         <td class="check-cell"><input type="checkbox" data-id="${id}" data-type="na" onchange="handleCheck(this)"></td>
-        <td class="check-cell"><input type="checkbox"></td>
-        <td class="check-cell"><input type="checkbox"></td>
-        <td class="remarks-cell"><input type="text" placeholder=""></td>
+        <td class="check-cell"><input type="checkbox" data-id="${id}" data-type="snag" onchange="scheduleAutoSave()"></td>
+        <td class="check-cell"><input type="checkbox" data-id="${id}" data-type="nota" onchange="scheduleAutoSave()"></td>
+        <td class="remarks-cell"><input type="text" data-id="${id}" data-type="remark" placeholder="" oninput="scheduleAutoSave()"></td>
         <td class="photo-cell"><button class="cam-btn" data-row="${id}" data-section="${escapeAttr(sec.title)}" data-label="${escapeAttr(r.item)}" data-ref="${escapeAttr(r.ref)}" onclick="openPhotoPanel({type:'row', id:this.dataset.row, section:this.dataset.section, label:this.dataset.label, ref:this.dataset.ref})">📷 <span class="cam-badge" id="badge-${id}">0</span></button></td>`;
       tbody.appendChild(tr);
     });
@@ -528,6 +576,7 @@ function handleCheck(cb){
     counters[type]++;
   }else{counters[type]--;}
   updateCounts();
+  scheduleAutoSave();
 }
 
 function openPanel(key){
@@ -614,12 +663,16 @@ function updateCaption(inp){
   const idx = parseInt(inp.dataset.idx);
   const arr = getPhotoArr();
   if(arr[idx]) arr[idx].caption = inp.value;
+  updateLiveGallery();
+  scheduleAutoSave();
 }
 
 function deletePhoto(i){
   if(!confirm('Remove this photo?')) return;
   getPhotoArr().splice(i, 1);
   renderPhotoGrid();
+  updateLiveGallery();
+  scheduleAutoSave();
 }
 
 function updatePhotoBadge(){
@@ -633,21 +686,46 @@ function updatePhotoBadge(){
   }
 }
 
-function handlePhotoInput(e){
-  const files = Array.from(e.target.files || []);
-  if(!files.length) return;
-  let pending = files.length;
-  files.forEach(f => {
-    const reader = new FileReader();
-    reader.onload = function(ev){
-      getPhotoArr().push({name: f.name, dataUrl: ev.target.result, caption: ''});
-      pending--;
-      if(pending === 0) renderPhotoGrid();
+/* Compress image to max 1100px / 0.78 JPEG — keeps localStorage usage low */
+function compressImage(dataUrl){
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX = 1100;
+      let w = img.width, h = img.height;
+      if(w > MAX || h > MAX){
+        if(w >= h){ h = Math.round(h * MAX/w); w = MAX; }
+        else { w = Math.round(w * MAX/h); h = MAX; }
+      }
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      c.getContext('2d').drawImage(img, 0, 0, w, h);
+      resolve(c.toDataURL('image/jpeg', 0.78));
     };
-    reader.onerror = function(){pending--; if(pending === 0) renderPhotoGrid();};
-    reader.readAsDataURL(f);
+    img.onerror = () => resolve(dataUrl);
+    img.src = dataUrl;
   });
+}
+
+async function handlePhotoInput(e){
+  const files = Array.from(e.target.files || []);
   e.target.value = '';
+  if(!files.length) return;
+  for(const f of files){
+    try {
+      const raw = await new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = ev => res(ev.target.result);
+        r.onerror = rej;
+        r.readAsDataURL(f);
+      });
+      const compressed = await compressImage(raw);
+      getPhotoArr().push({name: f.name, dataUrl: compressed, caption: ''});
+    } catch(err){ console.warn('Photo read failed', f.name, err); }
+  }
+  renderPhotoGrid();
+  updateLiveGallery();
+  scheduleAutoSave();
 }
 document.getElementById('ph-input-capture').addEventListener('change', handlePhotoInput);
 document.getElementById('ph-input-file').addEventListener('change', handlePhotoInput);
@@ -795,8 +873,230 @@ function buildPhotoAppendix(){
 }
 window.addEventListener('beforeprint', buildPhotoAppendix);
 
+/* ====================== AUTO-SAVE & STATE PERSISTENCE ====================== */
+const SAVE_KEY = 'fat-rmu-xfmr-v1';
+let _saveTimer = null;
+
+function scheduleAutoSave(){
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(autoSave, 1200);
+}
+
+function showAutoSaveMsg(msg, color){
+  const el = document.getElementById('autosave-msg');
+  el.textContent = msg;
+  el.style.color = color || '#2e7d10';
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+function collectState(){
+  const meta = Array.from(document.querySelectorAll('[data-mf]'))
+    .sort((a,b) => +a.dataset.mf - +b.dataset.mf)
+    .map(el => { const t = el.innerText.trim(); return t === ' ' || t === '' ? '' : t; });
+
+  const resultEl = document.querySelector('input[name="result"]:checked');
+  const signoff = {};
+  document.querySelectorAll('[data-sf]').forEach(el => signoff[el.dataset.sf] = el.value);
+
+  const rows = {};
+  document.querySelectorAll('input[data-id]').forEach(el => {
+    const id = el.dataset.id, type = el.dataset.type;
+    if(!rows[id]) rows[id] = {};
+    rows[id][type] = type === 'remark' ? el.value : el.checked;
+  });
+
+  return {
+    version: 1,
+    savedAt: new Date().toISOString(),
+    meta,
+    result: resultEl ? resultEl.value : '',
+    signoff,
+    rows,
+    photos
+  };
+}
+
+function applyState(state){
+  if(!state || state.version !== 1) return;
+
+  // Meta fields
+  const metaEls = document.querySelectorAll('[data-mf]');
+  (state.meta || []).forEach((v, i) => {
+    const el = document.querySelector('[data-mf="' + i + '"]');
+    if(el) el.innerText = v || ' ';
+  });
+
+  // Result radio
+  if(state.result){
+    const el = document.querySelector('input[name="result"][value="' + state.result + '"]');
+    if(el) el.checked = true;
+  }
+
+  // Sign-off
+  Object.entries(state.signoff || {}).forEach(([k, v]) => {
+    const el = document.querySelector('[data-sf="' + k + '"]');
+    if(el) el.value = v;
+  });
+
+  // Rows — reset counters first
+  counters = {pass:0, fail:0, na:0};
+  Object.entries(state.rows || {}).forEach(([id, rowState]) => {
+    Object.entries(rowState).forEach(([type, val]) => {
+      const el = document.querySelector('input[data-id="' + id + '"][data-type="' + type + '"]');
+      if(!el) return;
+      if(type === 'remark') { el.value = val; }
+      else {
+        el.checked = !!val;
+        if(val && (type === 'pass' || type === 'fail' || type === 'na')) counters[type]++;
+      }
+    });
+  });
+
+  // Photos
+  if(state.photos){
+    photos.rows = state.photos.rows || {};
+    photos.general = state.photos.general || [];
+    // Refresh photo badges
+    Object.keys(photos.rows).forEach(rowId => {
+      const el = document.getElementById('badge-' + rowId);
+      if(el) el.textContent = photos.rows[rowId].length;
+    });
+    const gc = document.getElementById('gen-photo-count');
+    if(gc) gc.textContent = photos.general.length;
+  }
+
+  updateCounts();
+  updateLiveGallery();
+}
+
+function autoSave(){
+  const state = collectState();
+  try {
+    localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+    showAutoSaveMsg('✓ Auto-saved');
+  } catch(e){
+    // Try saving without photos if storage full
+    try {
+      const slim = Object.assign({}, state, {photos: {rows:{}, general:[]}, photosOmitted: true});
+      localStorage.setItem(SAVE_KEY, JSON.stringify(slim));
+      showAutoSaveMsg('⚠ Saved (photos omitted — use Save Report)', '#c77b00');
+    } catch(e2){
+      showAutoSaveMsg('⚠ Auto-save failed — use Save Report', '#b71c1c');
+    }
+  }
+}
+
+function autoLoad(){
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(!raw) return;
+    const state = JSON.parse(raw);
+    applyState(state);
+    showAutoSaveMsg('✓ Progress restored', '#445e80');
+  } catch(e){ /* corrupt save — ignore */ }
+}
+
+/* ====================== SAVE / LOAD REPORT FILE ====================== */
+function saveReport(){
+  const state = collectState();
+  const project = (state.meta[0] || 'FAT').replace(/[^A-Za-z0-9]+/g,'_').slice(0,30) || 'FAT';
+  const dateStr = new Date().toISOString().slice(0,10);
+  const filename = 'FAT_Report_' + project + '_' + dateStr + '.json';
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 200);
+  showAutoSaveMsg('✓ Report saved: ' + filename);
+}
+
+function loadReport(input){
+  const f = input.files[0]; if(!f) return;
+  input.value = '';
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    try {
+      const state = JSON.parse(ev.target.result);
+      if(state.version !== 1) { alert('Unrecognised report file format.'); return; }
+      applyState(state);
+      autoSave(); // also persist to localStorage
+      showAutoSaveMsg('✓ Report loaded: ' + f.name);
+    } catch(e){ alert('Could not read report file. Make sure it is a valid FAT report (.json).'); }
+  };
+  reader.readAsText(f);
+}
+
+/* ====================== CLEAR ALL ====================== */
+function showClearConfirm(){ document.getElementById('clear-overlay').classList.add('open'); }
+
+function confirmClearAll(){
+  document.getElementById('clear-overlay').classList.remove('open');
+  localStorage.removeItem(SAVE_KEY);
+  location.reload();
+}
+
+/* ====================== LIVE PHOTO GALLERY ====================== */
+function updateLiveGallery(){
+  const body = document.getElementById('lg-body');
+  const total = document.getElementById('lg-total');
+  let allCount = 0;
+  let html = '';
+
+  let rowIdx = 0;
+  SECTIONS.forEach(sec => {
+    let secHtml = '';
+    sec.rows.forEach(r => {
+      const arr = photos.rows[rowIdx] || [];
+      arr.forEach(p => {
+        allCount++;
+        secHtml += '<div class="lg-tile" onclick="window.open(\'' + p.dataUrl.replace(/'/g,"\\'") + '\',\'_blank\')">' +
+          '<img src="' + p.dataUrl + '" alt="">' +
+          '<div class="lg-meta">' +
+            '<span class="lg-lbl" title="' + escapeAttr(r.item) + '">' + escapeHtml(r.item.slice(0,35)) + (r.item.length>35?'…':'') + '</span>' +
+            '<span class="lg-cap">' + (p.caption ? escapeHtml(p.caption) : '&nbsp;') + '</span>' +
+          '</div>' +
+        '</div>';
+      });
+      rowIdx++;
+    });
+    if(secHtml){
+      html += '<div class="lg-section-hdr">' + escapeHtml(sec.title) + '</div><div class="lg-grid">' + secHtml + '</div>';
+    }
+  });
+
+  if(photos.general.length){
+    html += '<div class="lg-section-hdr">General FAT Photos</div><div class="lg-grid">';
+    photos.general.forEach(p => {
+      allCount++;
+      html += '<div class="lg-tile" onclick="window.open(\'' + p.dataUrl.replace(/'/g,"\\'") + '\',\'_blank\')">' +
+        '<img src="' + p.dataUrl + '" alt="">' +
+        '<div class="lg-meta">' +
+          '<span class="lg-lbl">General Photo</span>' +
+          '<span class="lg-cap">' + (p.caption ? escapeHtml(p.caption) : '&nbsp;') + '</span>' +
+        '</div>' +
+      '</div>';
+    });
+    html += '</div>';
+  }
+
+  if(!allCount) html = '<div class="lg-empty">No photos added yet — tap 📷 on any check item or use the General FAT Photos section above.</div>';
+  body.innerHTML = html;
+  if(total) total.textContent = allCount ? '(' + allCount + ' photo' + (allCount>1?'s':'') + ')' : '';
+}
+
+/* Warn on accidental tab close / navigation */
+window.addEventListener('beforeunload', function(e){
+  const raw = localStorage.getItem(SAVE_KEY);
+  if(raw){ /* auto-save exists — safe to leave, browser will restore */ return; }
+  e.preventDefault(); e.returnValue = '';
+});
+
 buildChecklist();
-updateCounts();
+autoLoad();
 </script>
 </body>
 </html>
